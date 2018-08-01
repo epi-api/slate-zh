@@ -11,7 +11,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - csharp
 
 toc_footers:
-  - <a href='https://www.epiapi.com'>Visit us!</a>
+  - <a href='https://dash.sendwyre.com/register'>Sign Up for a Wyre Account!</a>
 
 
 
@@ -20,58 +20,53 @@ search: true
 
 # Overview
 
-epiapi is focused on enterprise tools that improve accessibility and usability of financial services across borders. We offer a powerful REST API that supports virtual banking services for enterprises, through our parent company Wyre. 
+Wyre offers a powerful REST API that supports wire transfers, mass international payouts, cryptocurrency wallet management, and virtual banking services for your personal or enterprise needs. 
 
-Our API uses HTTPS response codes and returns all error responses in JSON. To explore the API as much as possible, we offer a test environment in addition to production. Any transfers made in the test environment will not be executed. Both sandbox and production rely on API keys for authentication.
+Our API uses HTTPS response codes and returns all error responses in JSON. To explore the API as much as possible, we offer a test environment in addition to production. Any transfers made in the test environment will never hit the actual blockchain network or incur any fees. Both sandbox and production rely on API keys for authentication.
+
+The legacy API documentation can be found [here](https://docs.sendwyre.com/docs/overview).
 
 # Getting Started
 
-This guide is written as a standard implementation of our virtual banking service for setting up an environment to create US bank accounts for merchants selling on Amazon. Through this implementaiton you will be able to pass the necessary KYC information in order to open a virtual bank account, receive the bank account number, monitor for receivables, and manage funds for delivery to a designated bank account. All integrations will require a signed agreement with epiapi - please reach out to us at: contact@epiapi.com if you do not have an agreement in place of for any other questions.
+The Wyre API is designed for enterprises who need to send cross-border payments for end-to-end delivery in a matter of hours. Wyre transfers value instantly, achieves FX conversions equal to or better than midmarket, and utilizes local banking networks to complete bank-to-bank transfers.  
 
 **How to get Started**
 
 **Step 1. Read the documentation** <br>
-You are already doing this. Congratulations! <br>
+We recommend that you read the API documentation and familiarize yourself with the different API functions and calls so you can get the most out of the Wyre API! <br>
 
 **Step 2. Register a test account** <br>
-Sign up [here](https://www.testwyre.com) to interact with our test environment. No need to upload any documents for the test envornment (though this will be required on production) - jump straight to Step 3. <br>
+Sign up [here](https://www.testwyre.com) to interact with our test environment. The test API uses live market rates but does not execute real transactions. <br>
 
 **Step 3. Verify your test account** <br>
-Contact our support team at support@sendwyre.com so we can verify your test account and add test funds that you can start using. The test API does not execute real transactions so feel free to go crazy. <br>
+Contact our support team at support@sendwyre.com so we can auto verify your test account and add test funds that you can start using. <br>
 
-**Step 4. Get Support**<br>
-We will send you links to join us on Slack or other chat apps (DingTalk, QQ etc) - any questions just ask! <br>
+**Step 4. Assign a dedicated support engineer**<br>
+Wyre will assign a support engineer to your integration at no additional cost to assist you with any integration related questions during your testing. <br>
 
 **Step 5. Register a production account** <br>
-Once testing has completed, you can register a live account [here](https://sendwyre.com). You must go through the entire onboarding and verification process before you are allowed to interact with the account. <br>
+Once testing has completed, you can register a live account [here](https://sendwyre.com). You must go through the entire onboarding and verification process before you are allowed to send funds.<br>
 
-**Step 6. Go live!**<br>
-Once fully onboarded you are ready to go!
+**Step 6. Prefund your production account**<br>
+To learn more about topping up your account, please refer to more information [here](https://support.sendwyre.com/getting-started/get-started-on-the-right-foot/video-adding-funds-to-your-account). 
+
+**Step 7. Start sending funds**<br>
+You are ready to send your first live payment!
 
 # General
 
-## Supported Countries  
+## Supported Currencies  
 
-Our Virtual banking product currenctly accepts USD via ACH to a domestic US bank account. <br>
+We support a number of fiat currencies and cryptocurrencies including BTC and ETH (just launched). <br>
 
-**Countries** <br>
-- United States
-- European Union (coming soon)
-- Australia (coming soon)
+![Supported Currencies](SupportedCurrency.png)<p>
 
-<p>We are adding more countries soon. We will send an email as and when we release new funcionality ;)
-
-
-**Currencies** <br>
-- USD
-- EUR (coming soon)
-- GBP (coming soon)
-- AUD (coming soon)
+Learn more about our supported currency pairs <a href="https://support.sendwyre.com/sending-money/supported-currencies" target="_blank">here</a>. 
 
 
 ## Transport Method
 
-We provide a REST API that will always return a JSON Object as the response.<br>
+Wyre provides a REST API that will always return a JSON Object as the response.<br>
     
 During troubleshooting, please note that if your error response does not follow the previously mentioned format, the error is most likely due to a different endpoint. 
 
@@ -101,12 +96,18 @@ For unsuccessful API calls:<br>
 
 ## Production/Test Endpoints
 
-We have two environments, `testwyre` for API integration testing and `sendwyre`, our production environment. 
+We have two environments, `testwyre` for API integration testing and `sendwyre`, our production environment. The test environment also uses the same live exchange rates as our production environment.
 
 Environment | Endpoint
 --------- | -----------
 Test | <a href="https://www.testwyre.com" target="_blank">https://www.testwyre.com </a>
 Production | <a href="https://sendwyre.com" target="_blank">https://sendwyre.com </a>
+
+**Bitcoin Test Environment** <p>
+Please note that our test environment is live on TestNet3 for BTC.  For BTC TestNet funds, please refer <a href="https://testnet.manu.backend.hamburg/faucet" target="_blank">here</a>. You will expect to receive 1 confirmation on the network. 
+  
+**Ethereum Test Environment** <p>
+The test environment for ETH is Ropsten. For ETH TestNet funds, please refer <a href="http://faucet.ropsten.be:3001/" target = "_blank">here</a>. The Ethereum Block Explorer is also <a href="https://ropsten.etherscan.io/" target="_blank">here</a>. You will expect to receive 10 confirmations on the network. 
 
 ## Pagination
 
@@ -123,16 +124,16 @@ to | The upper bound of a creation time filter for the displayed items. Formatte
 ```ruby
 require 'uri'
 require 'net/http'
-require 'digest/hmac'
+require 'openssl'
 require 'json'
 
 class WyreApi
-  ACCOUNT_ID = 'YOUR_ACCOUNT_ID_HERE'
-  API_KEY = 'YOUR_API_KEY_HERE'
-  SEC_KEY = 'YOUR_SECRET_KEY_HERE'
+  ACCOUNT_ID = 'AC-1234556'
+  API_KEY = 'sdkdsfkjsdfkjasdkjasda'
+  SEC_KEY = 'kasdas9d8as9d8asdasdas'
   API_URL = 'https://api.sendwyre.com'
 
-  def create_transfer options
+def create_transfer options
     api_post '/transfers', options
   end
 
@@ -148,26 +149,27 @@ class WyreApi
     headers = {
       'X-Api-Key' => API_KEY,
       'X-Api-Signature' => calc_auth_sig_hash(url + post_data.to_json.to_s),
-      'X-Api-Version' => '2'
+      'X-Api-Version' => '2',
+      'content-type' => 'application/json'
     }
 
     uri = URI API_URL
     Net::HTTP.start(uri.host, uri.port, :use_ssl => true) do |http|
       http.request_post(url, post_data.to_json.to_s, headers) do |res|
         response = JSON.parse res.body
-        raise response['message'] if res.code != '200'
+        raise response.to_s if res.code != '200'
         return response
       end
     end
   end
 
   def calc_auth_sig_hash url_body
-    return Digest::HMAC.hexdigest url_body, SEC_KEY, Digest::SHA256
+    return OpenSSL::HMAC.hexdigest("SHA256", SEC_KEY, url_body)
   end
 end
 
 api = WyreApi.new
-api.create_transfer({'sourceAmount'=>50,'sourceCurrency'=>'USD','dest'=>'richard@epiapi.com', 'destCurrency'=>'CNY', 'message'=>'buy Richard pizza')
+puts api.create_transfer({'sourceAmount'=>50,'sourceCurrency'=>'USD','dest'=>'sam@sendwyre.com', 'destCurrency'=>'EUR', 'message'=>'buy sam pizza'})
 ```
 
 ```python
@@ -265,6 +267,51 @@ Wyre = MassPay_API(account_id, api_version, api_key, secret_key)
 #get account info
 http_code, account = Wyre.retrieve_account()
 print(account)
+
+#get exchange rate info
+http_code, rate_result = Wyre.retrieve_exchange_rates()
+print(rate_result)
+
+#BTC to CNY rate
+btc_cny = rate_result.get("BTCCNY")
+
+#amount of source (withdrawal) BTC we want to sent to Euro
+amount = 50
+
+#calculate destination (deposit) amount in CNY
+final_amount = amount * btc_cny
+
+#example bank transfer
+bank_transfer =   {
+                "paymentMethodType":"INTERNATIONAL_TRANSFER",
+                "country": "CN",
+                "currency": "CNY",
+                "nameOnAccount": "成龍",
+                "accountNumber": "1234dinosaur",
+                "bankName": "招商银行",
+                "accountType": "金卡",
+                "branchCode": "光华路支行",
+                "accountHolderEmail": "banana@phone.com",
+                "accountHolderPhoneNumber": "+14102239203",
+                "swift": "DEUTUS00000",
+                "beneficiaryType": "INDIVIDUAL",
+                "priority":"HIGH"
+                }
+
+#don't actually run this unless you really want to give Sam pizza
+http_code, transfer_result = Wyre.create_transfer(
+                                amount, 
+                                "BTC", 
+                                None, #final_amount
+                                "CNY", 
+                                bank_transfer, #may also be an email or SRN
+                                "sending Wyre developers pizza money",
+                                False)
+print(transfer_result)
+
+tx_id = transfer_result['id']
+http_code, status = Wyre.status_transfer('AWEvg0lZhq6qpXX')
+print(status)
 ```
 
 ```java
@@ -282,8 +329,8 @@ import java.net.URL;
 
 public class TestAuth {
   public static void main(String[] args) {
-    String apiKey = "YOUR_API_KEY_HERE";
-    String secretKey = "YOUR_SECRET_KEY_HERE";
+    String apiKey = "PUT YOUR API KEY HERE";
+    String secretKey = "PUT YOUR SECRET KEY HERE";
 
     String url = "https://api.sendwyre.com/account";
     String method = "GET";
@@ -406,8 +453,8 @@ public class TestAuth {
 <?php
     function make_authenticated_request($endpoint, $method, $body) {
         $url = 'https://api.sendwyre.com';
-        $api_key = "YOUR_API_KEY_HERE";
-        $secret_key = "YOUR_SECRET_KEY_HERE";
+        $api_key = "bh405n7stsuo5ut30iftrsl71b4iqjnv";
+        $secret_key = "a19cvrchgja82urvn47kirrlrrb7stgg";
 
         $timestamp = floor(microtime(true)*1000);
         $request_url = $url . $endpoint;
@@ -457,16 +504,23 @@ public class TestAuth {
     echo make_authenticated_request("/account", "GET", array());
     $transfer = array(
       "sourceCurrency"=>"USD",
-      "dest"=>"paymentmethod:PA-123123123",
-      "sourceAmount"=> 100.01,
-      "destCurrency"=>"USD",
-      "amountIncludesFees"=>True
-      "message"=> "Test"
+      "dest"=>"sam@sendwyre.com",
+      "destAmount"=> 55.05,
+      "destCurrency"=>"EUR",
+      "message"=> "buy sam pizza"
       );
     echo make_authenticated_request("/transfers", "POST", $transfer);
 ?>
 ```
-```charp
+
+
+
+
+
+
+
+
+```csharp
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -502,8 +556,8 @@ namespace testauthwyre
     public class WyreApi
     {
         private const String domain = "https://api.sendwyre.com";
-        private const String apiKey = "YOUR_API_KEY_HERE";
-        private const String secKey = "YOUR_SECRET_KEY_HERE";
+        private const String apiKey = "xxx";
+        private const String secKey = "xxx";
         public HttpWebResponse Get(string path)
         {
             return Get(path, new Dictionary<string, object>());
@@ -577,7 +631,7 @@ In order to make an authenticated request you'll need to pass a couple of values
 
 HTTP Header Field | Description 
 --------- | -----------
-X-Api-Key | Your API key. Your key can be found <a href="https://dash.sendwyre.com/settings/api-keys" target="_blank">here</a>
+X-Api-Key | Your Wyre API key. Your key can be found <a href="https://dash.sendwyre.com/settings/api-keys" target="_blank">here</a>
 X-Api-Signature | A signature used to verify the request was sent by the account holder. See Calculating the request signature.
 
 Additionally, you should include a `GET` parameter named timestamp which is the current time in **millisecond epoch format**. We use this timestamp to help protect against replay attacks.
@@ -600,27 +654,29 @@ Calculating the X-Api-Signature field is a two step process: <br>
 
 ## SRNs
 
-An SRN is a System Resource Name. It is a typed identifier that may reference any object within our platform. Many of our API calls and data schemas leverage SRNs in order to add flexibility and decouple services. All SRNs follow the same format: 
+An SRN is a System Resource Name. It is a typed identifier that may reference any object within the Wyre platform. Many of our API calls and data schemas leverage SRNs in order to add flexibility and decouple services. All SRNs follow the same format: 
 
 type | Identifier
 --------- | -----------
-contact | A contact id (contact:CO-123123123)
-paymentmethod | A payment method such as a bank account (paymentmethod:PA-123123123)
-email | An email address (email:test@epiapi.com)
-cellphone | A cellphone number (cellphone:+8615555555555)
-account | A plafrom account (account:AC-123123123)
-wallet | A single wallet (wallet:WA-123123123)
-transfer | A transfer (possibly including a conversion) of currency (transfer:TF-123123123)
+contact | A contact id (e.g. contact:567a93fb)
+paymentmethod | A payment method such as a credit card, bank account, etc.
+email | An email address (e.g. email:dev@sendwyre.com)
+cellphone | A cellphone number (e.g. cellphone:+15555555555)
+bitcoin | Blockchain addresses
+ethereum | Blockchain addresses
+account | A Wyre account
+wallet | A single wallet that can hold monies
+transfer | A transfer (possibly including a conversion) of currency
 
 ## Fees
 
-To understand how are fees are calculated and charged, please refer <a href="XXXXXXXXXXXXXX" target="_blank">here</a>.
+To understand how are fees are calculated and charged, please refer <a href="https://support.sendwyre.com/digital-currency-basics/bitcoin-payouts" target="_blank">here</a>.
 
 ## Error Table
 
 Successful requests will be a HTTP 200 response after any successful call. The body of successful requests depend on the endpoint. <br>
 
-Whenever a problem occurs, we will respond to the client using a 4xx or 5xx status code. In this case, the body of the response will be an exception object which describes the problem. <br>
+Whenever a problem occurs, Wyre will respond to the client using a 4xx or 5xx status code. In this case, the body of the response will be an exception object which describes the problem. <br>
 
 Exception | Description | HTTPs Status Code
 --------- | ----------- | -----------
@@ -656,22 +712,142 @@ PAYMENT_METHOD_UNDEPOSITABLE <br>
 PAYMENT_METHOD_DOESNT_SUPPORT_FOLLOWUPS <br>
 PAYMENT_METHOD_DOESNT_SUPPORT_MICRODEPOSIT_VERIFICATION <br>
 
-# Step-by-step Guide
+# Cookbooks
 
-This guide will take you through all steps required to build a funds receivables product based on our API. 
+Wyre's powerful API provides the capability of sending international payments or bitcoin in a multitude of ways that best suits your business needs. Each cookbook will show you step by step how to send money whether you want to send mass payouts internationally or link Wyre to your brokerage engine.
+
+## KYC Smart Contract
+
+Everytime a user's KYC is verified or approved by Wyre compliance, an NFT token will be issued into that user's wallet of choice. Any DEX or dApp can reference the KYC smart contract and indicate whether or not that wallet contains an NFT issued by Wyre. 
+
+### Step 1. User signs up for an account on Wyre
+
+### Step 2. User inputs verification address
+
+### Step 3. Wyre compliance reviews KYC
+
+### Step 4. DEX/dApp will look up smart contract on Ropsten
+
+### Step 5. Using the balanceOf function. <br>
+`function balanceOf(address _owner) public view returns (uint256) { return ownedTokens[_owner].length; }` <br>
+If it returns >=0, they know that we have issued a verification token to that address.
+
+<pre class="center-column">
+<-------- START ------->
+let MyContract = web3.eth.contract(INSERT_219LineBlob_HERE); 
+//its same ABI provided in snippet above that you asked about. Aka "blob to talk to //contract"...
+
+let myContractInstance = MyContract.at('0x2d1c60c8ecb86faeb1c4d26cb744067866f356bd'); 
+//This is the identity contract that we give to them.
+
+let address = 'INSERT_METAMASK_ADDRESS_HERE'; //metamask chrome extension 
+ myContractInstance.balanceOf.call(address, function (error, balance) {
+   if (error) {
+     console.log('err',error);
+   }
+   console.log('wei', web3.fromWei(balance.toNumber(), "ether" ) );
+   console.log(' oooo--->', balance);
+ });
+<-------- FINISH ------->
+// --> Developers add their code from their site here which says "If they don't have a token, then stay the same, if they DO have a token, then give them cool awesome features!!!
+</pre>
 
 
-## Vitual Banking
+## Money Transfer/Payouts
 
-**Building a USD receivables business on epiapi** 
+There are many ways to use the Wyre API to provide FX and payout services to your users. To help developers understand how it may be used, we’ve described a typical use-case below. <br>
 
-There are many different ways to integrate with our API to provide different types of payments receivables services. To help developers understand how it may be used, we’ve described a typical use-case below. <br>
+This cookbook will show you an example of how a client platform may add CNY conversion and payouts via Wyre API.<br>
 
-We will show you an example of how an online platform may create USD virtual bank accounts with unique account numbers for its users, and receive funds for delivery into a dedicated settlement account. <br>
+The client platform will maintain a USD float (prefund) on the Wyre platform, which will be topped up on a weekly basis according to weekly transaction volume.<br>
 
-### Step 1. Create a Wallet with KYC Data
+The client's users will obtain live rates from the Wyre API, and after confirming the rates, will make payments to the client's platform via the local payment network in that platform’s jurisdiction.<br>
 
-Wyre uses the concept of `wallets` to represent individual merchant accounts under your `account`. Upon creation, each of these wallets are assigned various fund receiving capabilities, for `TYPE=VBA` wallets a Virtual Bank Account (with a unique bank account and routing number) will be created. <br>
+After confirming payment from the user, the client's platform will make a payout call to the Wyre API to convert the corresponding amount of USD to CNY and deliver to the user’s recipient in China.<br>
+
+In the example above, the fund flow will look something like the below:<p>
+![masspayouts](masspayouts.png)
+
+
+### Step 1. Check live exchange rates
+
+`GET` https://api.sendwyre.com/v2/rates <br>
+
+You can ping the [rates API](http://sendwyre.com/docs/#live-exchange-rates) to get the latest currency exchange rates which refreshes every 30 seconds. <br>
+
+The mid market rate is calculated as MMR = (Buy rate + Sell Rate)/2. This rate is obtained from <a href="https://openexchangerates.org" target="_blank">open exchange rates</a>.
+
+### Step 2. Check supported banks in China 
+
+`GET` https://api.sendwyre.com/v2/bankinfo/CN <br>
+
+When you create your payout on behalf of the user in the next step, make sure the Chinese bank you send to is one we support. The list of supported banks will be presented in Chinese characters. The same list can also be found  <a href="https://support.sendwyre.com/sending-money/send-money-to-china/list-of-supported-chinese-banks" target="_blank">here</a>.
+
+
+
+### Step 3. Create a transfer
+
+```json
+{
+  "dest": {
+    "paymentMethodType":"INTERNATIONAL_TRANSFER",
+    "country": "CN",
+    "currency": "CNY",
+    "beneficiaryType": "INDIVIDUAL",
+    "paymentType" : "LOCAL_BANK_TRANSFER", // LOCAL_BANK_TRANSFER only
+    "nameOnAccount": "张三",
+    "accountNumber": "0000000000000000",
+    "bankName": "中国工商银行",
+    "branchName":"上海分行田林支行",
+    "bankCity":"上海",
+    "bankProvince": "上海"
+  },
+  "sourceCurrency": "USD",
+  "destCurrency": "CNY",
+  "destAmount": 10,
+  "message": "CNY example", // optional - note
+  "referenceNumber": "", // optional - reference number
+  "customId": "", // optional - unique identifier you can assign
+  "autoConfirm": "true", //optional - automatically confirm if true
+  "amountIncludesFees": "true", // optional -  if true, the amount given (source, dest, equiv) will be treated as already including the fees and nothing in addition will be withdrew
+  "callbackUrl": "" // optional - location where to receive callbacks
+}
+```
+`POST` https://api.sendwyre.com/v2/transfers <br>
+
+Next, create a transfer on behalf of the user to send the payout to the user's recipient in China. Keep in mind all of the [requirements for China's payouts](http://sendwyre.com/docs/#china). <br>
+
+Note that _Chinese characters_ need to be passed for `nameOnAccount`, `bankName`, `branchName`, `bankCity` and `bankProvince`. 
+
+When you perform the create transfer API call, you will receive a 200 response including `totalFees` which will break down all the Wyre fees. The transfer will not execute however until you confirm it. You can confirm simultaneously in the create transfer call by adding parameter `autoConfirm` and setting that to "true" (see example on right). Otherwise you can perform the [confirm transfer](http://sendwyre.com/docs/#confirm-transfer) API call within a 30 second window to lock in that rate.  <br>
+
+
+### Step 3. Receive payment status
+
+`GET` https://api.sendwyre.com/v2/transfer/:customId <br>
+
+Periodically [check payment status](http://sendwyre.com/docs/#lookup-transfer) for all pending payments via API (every 15 minutes). When payment is detected as “Completed”, your platform can notify the user via their own system. 
+
+
+## Bitcoin in a Box
+
+**Building a bitcoin brokerage on Wyre’s API** 
+
+There are many ways to use the Wyre API to provide different types of bitcoin trading and payout services. To help developers understand how it may be used, we’ve described a typical use-case below. <br>
+
+This cookbook will show you an example of how an online platform may provide bitcoin buy/sell services to their users via the Wyre API. The platform will utilise the Wallet feature to segregate client funds in “sub-accounts”. <br>
+
+Live rates will be provided to the users via the Wyre API, and when a user wishes to make a purchase, a rate will be locked in and the user given 30 seconds to confirm.<br>
+
+A USD float (prefund) will be maintained on the Wyre platform, and topped up on a weekly basis according to transaction volume. The online platform will use their own bank account to receive USD from users for bitcoin buys.
+BTC withdrawals will be disbursed by Wyre to users. USD withdrawals will be disbursed by the online platform via their local banking system.<br>
+
+For a bitcoin purchase, the flow of funds will normally look something like this:<p>
+![flow](flow.png)
+
+
+
+### Step 1. A new user signs up on the client's platform
 
 ```cURL
 
@@ -679,106 +855,18 @@ curl -v -XPOST 'https://api.sendwyre.com/v2/wallets' \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: {api-key}" \
   -H "X-Api-Signature: {signature}" \
-  -d '{"type":"VBA","name":"{your-unique-identifier}",
+  -d '{"type":"ENTERPRISE","name":"{your-unique-identifier}",
   "callbackUrl":"https://your.website.io/callback",
-  "vbaVerificationData":"XXXXXXXXXXXXXXXX"}'
+  "notes":"Notes about the sub account"}'
   ```
 `POST` https://api.sendwyre.com/v2/wallets <br>
 
-Once a new user requests a VBA via your platform, [create a wallet](http://sendwyre.com/docs/#create-wallet) on Wyre for that user. <br>
+Once a new user registers on the client's platform (not Wyre), [create a wallet](http://sendwyre.com/docs/#create-wallet) on Wyre for that user. <br>
 
-Note: You should collect the required documentation and pass through to Wyre through this endpoint. The data is used for KYC purposes and is necessary in order to open the virtual banking facilities. The wallet will be opened immediately, and the banking information will be appended to the account once approved.
+Each wallet will automatically be assigned a unique BTC address.
 
-Each wallet will automatically be assigned a walletId.
-
-Take note of the `walletId` that gets generated in the response as this will be used later to manage the VBA.
+Take note of the `walletId` that gets generated in the response as this will be used later to create a money transfer.
  
-### Step 2. Upload KYC documents
-
-`POST` https://api.sendwyre.com/v2/documents <br>
-
-VBA Wallets require the below docuemntation in order to be issued with a Virtual Bank `accountNumber`. When you upload a document using this endpoint you will recieve a `documentId` which you will need for Step 3. <br>
-
-When updating pass the following parameters along with the URL: 
-
-Field |
---------- |
-ownerSrn: "wallet:[WALLET_ID]"
-filename (optional): “coiDoc.pdf”
-
-E.g. `POST` https://api.sendwyre.com/v2/documents?ownerSrn=wallet:WA-123123123&filename=coiDoc.pdf
-
-In the body of the request simply include the raw bytes of file to be uploaded.
-
-```java
-public static String computeSignature2(String secretKey,String url, byte[] reqData) throws UnsupportedEncodingException {
-
-       byte[] urlBytes = url.getBytes("UTF-8");
-
-       byte[] data = new byte[urlBytes.length+reqData.length];
-
-       System.arraycopy(urlBytes,0,data,0,urlBytes.length);
-       System.arraycopy(reqData,0,data,urlBytes.length,reqData.length);
-
-       try {
-           Mac sha256Hmac = Mac.getInstance("HmacSHA256");
-           SecretKeySpec key = new SecretKeySpec(secretKey.getBytes(), "HmacSHA256");
-           sha256Hmac.init(key);
-
-           byte[] macData = sha256Hmac.doFinal(data);
-
-           StringBuffer result = new StringBuffer();
-           for (final byte element : macData){
-               result.append(Integer.toString((element & 0xff) + 0x100, 16).substring(1));
-           }
-           return result.toString();
-
-       } catch (Exception e) {
-           e.printStackTrace();
-           return "";
-       }
-   }
-```
-
-Finally, the content-type header should reflect the file type - allowed content-types include:
-
-Content Type |
---------- |
-"application/msword"
-"application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-"application/pdf"
-"image/jpg"
-"image/jpeg"
-"image/png"
-Once the file is uploaded the user will receive a "document" object as the response. Take the ID from this (e.g. DO-123123123) and provide it in the coiDoc, idDoc or salesDoc fields.
-
-Field | Description
---------- | -----------
-idDoc | A government-issued indentity docuement such as a passport or natioanl ID card.
-coiDoc | The company's Certificate of Incorporation.
-salesDoc | A document detailing the merchant's recent sales*
-
-*For Amazon - please use the ListFinancialEventsGroup query for the last 90 days to upload a xml file
-
-### Step 3. Update KYC Data to include documents
-
-When documents are uploaded they are associated to the wallet according to the ownerSrn. In order to determine the type and the latest documents, please update the following fields in the `vbaVerificationData`:
-
-```json
-{
-	"vbaVerificationData":{
-		"coiDoc":"DO-123123123",
-		"idDoc":"DO-123123124",
-		"salesDoc":"DO-123123125"
-	}
-}
-```
-
-### Step 4. Check for banking data
-
-Banking data is added as an `object` to the `vbaData` setcion of the wallet object. 
-
-
 
 
 ### Step 2. User makes a deposit on client's platform
@@ -898,11 +986,33 @@ Afterwards, the client's platform should deliver payout to the user from the cli
 You can send a request to our payment operations team at `payops@sendwyre.com`.
 
 
+# Rates
+
+## Live Exchange Rates
+
+We offer an exchange rates endpoint which provides the current Wyre brokering rate. Wyre uses the Mid Market Exchange Rate (MMR) which is the midpoint between the selling price and buying price of a given currency. This is approximately the exchange rate that will be used for any relatively small exchange through our platform (larger exchanges may give different rates depending on market depth). You can read more about how we use MMR [here](https://support.sendwyre.com/fees-and-rates/what-exchange-rates-do-you-use). 
+
+**Definition** <br>
+`GET`  https://api.sendwyre.com/v2/rates <br>
+
+The ordering of the trade pair in the key represents the direction of an exchange. For example, `CADUSD` is the rate used for CAD into USD conversions (e.g. the sell rate). On the other hand, converting USD into CAD (the buy rate) would use the opposite rate under `USDCAD`.
+
+You can also view the rates in different formats according to your preference:<br>
+
+*https://api.sendwyre.com/v2/rates?as=divisor* - source amount / rate = destination amount (default)<br>
+
+*https://api.sendwyre.com/v2/rates?as=multiplier* - source amount * rate = destination amount<br>
+
+*https://api.sendwyre.com/v2/rates?as=priced* - shows both divisor and multiplier values side by side<br>
+
+For example, if 1 BTC is selling at 9000 USD, `USDBTC` will be 9000 in the *divisor* view and (1/9000) in the *pretty* view. 
+
+
 # Account
 
 ## Account Details
 
-This endpoint retrieves all the information related to your account. <br>
+This endpoint retrieves all the information related to your account. All of the information displayed in the Wyre dashboard can be found here. <br>
 
 **Definition** <br>
 
@@ -912,13 +1022,13 @@ When checking your balance you should refer to the `availableBalance` object to 
 
 Field | Description
 --------- | -----------
-ID | An internal id corresponding to your account.
+ID | An internal Wyre id corresponding to your account.
 createdAt | Time at which the account was created.
 updatedAt | The last time the account was updated.
 loginAt | The last time the account was logged in to.
 rank | The account's rank. Used for things like limits on the accounts option to purchase digital currencies.
 profile | A set of fields that the user has permission to modify.
-paymentMethods | A list of payment methods available on the account.
+paymentMethods | A list of payment methods available on the account to make digital currency purchases.
 identities | 	An array of identities (cellphone numbers, email addresses) associated with the account. Each identity includes information about when they were created and when they were verified.
 depositAddresses | A map of digital currency deposit addresses for the account.
 totalBalances | A map of the total amount of funds in the user's account. This is the sum of the pending balances and the available balances.
@@ -963,7 +1073,7 @@ cellphone | The cellphone number tied to the account.
   "paymentMethods": [],
   "identities": [
     {
-      "srn": "email:richard@apiepi.com",
+      "srn": "email:sam@doonstack.com",
       "createdAt": 1404177262332,
       "verifiedAt": 1404177262332
     }
@@ -972,13 +1082,15 @@ cellphone | The cellphone number tied to the account.
     "BTC": "1H9K67J9NcYtzmFGojR9cgM5ybxEddySwu"
   },
   "totalBalances": {
-    "USD": 11.8934023
+    "USD": 11.8934023,
+    "BTC": 265.112
   },
   "availableBalances": {
     "USD": 10.8934023,
+    "BTC": 250.112
   },
-  "email": "richard@apiepi.com",
-  "cellphone": "+12312313112"
+  "email": "sam@doonstack.com",
+  "cellphone": "+15234897342"
 }
 </pre>
 
@@ -1750,10 +1862,12 @@ notes | string | Updated notes | no
 curl -v -XDELETE 'https://api.sendwyre.com/v2/wallet/{wallet-id}' \
   -H "X-Api-Key: {api-key}" \
   -H "X-Api-Signature: {signature}"
+
+
 ```
 
 
-This endpoint removes the wallet from your account. Note that the wallet data is retained in our system for compliance purposes. Once an account is deleted the Virtual Bank Account associated with the wallet will be closed and no longer availabel for receiving funds. <br>
+This endpoint removes the account's child wallet from your account. <br>
 
 **Definition** <br>
 
@@ -1832,8 +1946,10 @@ Callbacks are sent whenever a transactional event occurs that will affect the wa
 * Outgoing transaction 
 <br>
 
+You may receive two callbacks for a single transaction. This is especially true for transactions on the blockchain. In these cases, you would receive one callback when the transaction is first observed and one callback once the transaction is confirmed.
+
 **Callback Acceptance and Retries** <br>
-Your system should respond to the callback request with a 200 response. If we do not receive a valid repsonse our system will continue to attempt to send the request.
+Your system should respond to the callback request with a 200 response. We only attempt to send the request once, but we may introduce automatic retries in the future. We can manually resend callbacks upon request.
 
 **Result Format** <br>
 
@@ -1874,7 +1990,8 @@ The callback payload will be a JSON representation of the transaction that has c
 
 ## Introduction
 
-Transfers represent the building blocks of our API. Our Transfer API is an incredibly versatile way of moving funds not only externally but internally as well, whether it's through internal account management or internal exchanges.  Additionally, you can specify differing source and destination currencies and the funds will automatically exchanged into the appropriate currency in our backend. <br>
+Transfers represent the building blocks of our API. Our Transfer API is an incredibly versatile way of moving funds not only externally but internally as well, whether it's through internal account management or internal exchanges.  Additionally, you can specify differing source and destination currencies and the funds will automatically exchanged into the appropriate currency in our backend. For example, a common use case is to move funds from a USD Wyre balance into a Chinese CNY bank account.
+<br><br>
 Anytime you want to move funds around on the Wyre platform you will create a Transfer. The Transfer will go through a number of states as funds are moved to the destination of your choice.<BR>
   
 Please refer [here](http://sendwyre.com/docs/#country-currency-requirements) for each country's individual requirements when conducting international transfers. 
@@ -2468,7 +2585,7 @@ Banks in different countries have a unique set of financial requirements that ne
 
 ## China
 
-Please note that the minimum amount to transfer CNY is 100 CNY. <br>
+Please note that the minimum amount to transfer CNY is 200 CNY. <br>
 
 **Definition**<br>
 `POST` https://api.sendwyre.com/v2/transfers <br><br>
@@ -2531,6 +2648,129 @@ destAmount | Amount to be deposited to the dest - the amount debited from your a
 
 * The list of supported banks are located <a href="https://support.sendwyre.com/sending-money/send-money-to-china/list-of-supported-chinese-banks" target="_blank">here</a>.
 
+## Brazil
+
+Please note that the minimum amount to transfer BRL is 10 BRL (Banco do Brasil, Bradesco, Caixa) or 50 BRL (Other banks). <br>
+
+**Definition**<br>
+`POST` https://api.sendwyre.com/v2/transfers <br><br>
+
+```json
+{
+  "dest": {
+    "paymentMethodType":"INTERNATIONAL_TRANSFER",
+    "bankCode":"341",
+    "bankName":"ITAU",
+    "branchCode":"6199",
+    "nameOnAccount":"Steve McQueen",
+    "accountNumber":"4444-5",
+    "accountType":"corrente",
+    "cpfCnpj":"00000000000",
+    "currency":"BRL",
+    "country":"BR",
+    "accountHolderPhoneNumber":"+559936210617"
+  },
+  "sourceCurrency": "BRL",
+  "destCurrency": "BRL",
+  "destAmount": 10,
+  "message":"Transfer message"
+}
+```
+
+**Brazil Requirements** <br>
+
+Parameter | Description 
+--------- | ----------- 
+dest | object
+dest.paymentMethodType | `INTERNATIONAL_TRANSFER`
+dest.bankCode | [Supported bank codes](https://api.sendwyre.com/v2/bankinfo/BR)
+dest.bankName | [Supported bank names](https://api.sendwyre.com/v2/bankinfo/BR)
+dest.branchCode | For bank code 001 and bank code 104: "####-#" - where the first 4 digits are the branch number and the final digit is the branch check digit. Example: "3325-1". For all other banks: "####" - a 4 digit branch number. Example "3325"
+dest.accountNumber | Account number needs to follow "22652-1" format 
+dest.nameOnAccount | Beneficiary name
+dest.accountType | `corrente`
+dest.cpfCnpj | Brazilian tax in "25343734391" format
+dest.currency | BRL
+dest.country | BR
+dest.accountHolderPhoneNumber | Beneficiary phone number in format "+559936210716"
+sourceCurrency | Currency to be debited from your account
+destCurrency | Currency to be deposited to the dest. If destCurrency doesn't match the sourceCurrency an exchange will be performed
+destAmount | Amount to be deposited to the dest - the amount debited from your account will be calculated automatically from the exchange rate/fees.
+
+**Supported Banks**<br>
+
+* The list of supported banks are located <a href="https://support.sendwyre.com/sending-money/send-money-to-brazil/supported-banks-in-brazil" target="_blank">here</a>.
+
+**Delivery Times**
+
+Caixa Economica Federal, Bradesco, & Banco do Brasil: <br>
+
+* 1 business day to affiliate the account
+* 30 minutes to 24 hours to complete the transactions<br>
+
+All other banks: <br>
+
+* 1 business day to affiliate the account
+* 30 minutes to 24 hours to complete the transaction if sent before 3pm and above R$ 250, (otherwise next day)
+
+## Mexico
+
+SPEI - SPEI is Mexico’s lightning fast and inexpensive inter-bank transfer system (akin to SEPA in Europe, and vastly superior to ACH). All bank accounts in Mexico can be identified by their special 18-digit SPEI account number, otherwise known as a ‘CLABE’. Transfers executed via SPEI are typically concluded within a few seconds (within banking hours).<Br>
+
+Please note that the minimum amount to transfer MXN is 50 MXN. <br>
+
+**Definition**<br>
+`POST` https://api.sendwyre.com/v2/transfers <br><br>
+
+```json
+{
+    "source":"account:AC-0000000000",
+    "dest":
+    {
+    "paymentMethodType":"INTERNATIONAL_TRANSFER",
+    "paymentType":"LOCAL_BANK_TRANSFER",
+    "firstNameOnAccount":"Veronica",
+    "lastNameOnAccount":"UB",
+    "accountNumber":"0000000000",
+    "clabe":"0000000000",
+    "currency":"MXN",
+    "country":"MX",
+    "beneficiaryType":"INDIVIDUAL",    
+    "nameOnAccount":"personal account"
+    },
+    "destAmount": 721.10,
+    "destCurrency": "MXN",
+    "sourceCurrency": "USD",
+    "autoConfirm": true,
+    "message": "MXN example"
+}
+```
+
+
+**Mexico Requirements** <br>
+
+
+Parameter | Description 
+--------- | ----------- 
+dest | object
+dest.paymentMethodType | `INTERNATIONAL_TRANSFER`
+dest.paymentType | `LOCAL_BANK_TRANSFER`
+dest.beneficiaryType | `INDIVIDUAL` or `CORPORATE`
+dest.firstNameOnAccount | Required for Individual
+dest.lastNameOnAccount | Required for Individual
+dest.beneficiaryName | Required for Business
+dest.accountNumber | Beneficiary account number
+dest.clabe | 18-digit SPEI account number
+dest.currency | MXN
+dest.country | MX
+dest.nameOnAccount | Beneficiary name
+destAmount | Amount to be deposited to the dest - the amount debited from your account will be calculated automatically from the exchange rate/fees.
+destCurrency | Currency to be deposited to the dest. If destCurrency doesn't match the sourceCurrency an exchange will be preformed
+sourceCurrency | Currency to be debited from your account
+
+**Delivery Times**
+
+Triggers a SPEI + DEBIT CARD withdrawal from your account. These withdrawals are immediate during banking hours for some banks (M-F 9:00AM - 5:00PM Mexico City Time), 24 hours for others.
 
 ## USA
 
@@ -2595,5 +2835,7 @@ destCurrency | Currency to be deposited to the dest. If destCurrency doesn't mat
 sourceCurrency | Currency to be debited from your account
 
 **Delivery Times** <br>
-Bank cut-off time is 4PM CT<br>
-If we receive the payment instruction on the day before 4PM CT, the payment will be sent out that same day.-If we receive the payment instruction after 4PM CT, it will be credited to beneficiary next business day +1.<br>
+Bank cut-off time is 12PM PST<br>
+If we receive the payment instruction on the day before 12PM, the payment will be credited to beneficiary the next business day.-If we receive the payment instruction after 12PM, it will be credited to beneficiary next business day +1.<br>
+
+
