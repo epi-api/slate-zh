@@ -978,17 +978,43 @@ Once fully onboarded you are ready to go!</p>
 <li><p>Compute the signature using HMAC with SHA-256 and your API Secret Key.</p></li>
 </ol>
 <h2 id='srns'>SRNs</h2>
-<p>An SRN is a System Resource Name. It is a typed identifier that may reference any object within our platform. Many of our API calls and data schemas leverage SRNs in order to add flexibility and decouple services. All SRNs follow the same format:
-<br>
-type | Identifier
---------- | -----------
-contact | A contact id (contact:CO-123123123)
-paymentmethod | A payment method such as a bank account (paymentmethod:PA-123123123)
-email | An email address (email:test@epiapi.com)
-cellphone | A cellphone number (cellphone:+8615555555555)
-account | A plaform account (account:AC-123123123)
-wallet | A single wallet (wallet:WA-123123123)
-transfer | A transfer (possibly including a conversion) of currency (transfer:TF-123123123)</p>
+<p>An SRN is a System Resource Name. It is a typed identifier that may reference any object within our platform. Many of our API calls and data schemas leverage SRNs in order to add flexibility and decouple services. All SRNs follow the same format:</p>
+
+<table><thead>
+<tr>
+<th>type</th>
+<th>Identifier</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>contact</td>
+<td>A contact id (contact:CO-123123123)</td>
+</tr>
+<tr>
+<td>paymentmethod</td>
+<td>A payment method such as a bank account (paymentmethod:PA-123123123)</td>
+</tr>
+<tr>
+<td>email</td>
+<td>An email address (email:test@epiapi.com)</td>
+</tr>
+<tr>
+<td>cellphone</td>
+<td>A cellphone number (cellphone:+8615555555555)</td>
+</tr>
+<tr>
+<td>account</td>
+<td>A plaform account (account:AC-123123123)</td>
+</tr>
+<tr>
+<td>wallet</td>
+<td>A single wallet (wallet:WA-123123123)</td>
+</tr>
+<tr>
+<td>transfer</td>
+<td>A transfer (possibly including a conversion) of currency (transfer:TF-123123123)</td>
+</tr>
+</tbody></table>
 <h2 id='fees'>Fees</h2>
 <p>Fees are caluculated by our system based on the contract signed by both parties. Our standard fee for VBA + daily settlement is 0.25%.</p>
 <h2 id='error-table'>Error Table</h2>
