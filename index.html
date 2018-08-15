@@ -258,6 +258,10 @@
                   </li>
                   <li>
 
+                    <a href="#calculating-the-request-signature" class="toc-h2 toc-link" data-title="calculating-the-request-signature">Calculating the request signature</a>
+                  </li>
+                  <li>
+
                     <a href="#srns" class="toc-h2 toc-link" data-title="srns">SRNs</a>
                   </li>
                   <li>
@@ -335,10 +339,6 @@
 
                     <a href="#list-wallets" class="toc-h2 toc-link" data-title="list-wallets">List Wallets</a>
                   </li>
-                  <li>
-
-                    <a href="#callbacks" class="toc-h2 toc-link" data-title="callbacks">Callbacks</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -370,7 +370,7 @@
                   </li>
                   <li>
 
-                    <a href="#callbacks-2" class="toc-h2 toc-link" data-title="callbacks">Callbacks</a>
+                    <a href="#callbacks" class="toc-h2 toc-link" data-title="callbacks">Callbacks</a>
                   </li>
               </ul>
           </li>
@@ -404,15 +404,16 @@
 
 <p>Our API uses HTTPS response codes and returns all error responses in JSON. To explore the API as much as possible, we offer a test environment in addition to production. Any transfers made in the test environment will not be executed. Both sandbox and production rely on API keys for authentication.</p>
 <h1 id='getting-started'>Getting Started</h1>
-<p>This guide is written as a standard implementation of our virtual banking service for setting up an environment to create US bank accounts for merchants selling on Amazon. Through this implementation you will be able to pass the necessary KYC information in order to open a virtual bank account, receive the bank account number, monitor for receivables, and manage funds for delivery to a designated bank account. All integrations will require a signed agreement with epiapi - please reach out to us at: contact@epiapi.com if you do not have an agreement in place or for any other questions.</p>
+<p>This guide is written as a standard implementation of our virtual banking service for setting up an environment to create US bank accounts for merchants selling on Amazon. Through this implementation you will be able to pass the necessary KYC information in order to open a virtual bank account, receive the bank account number, monitor for receivables, and manage funds for delivery to a designated bank account. All integrations will require a signed agreement with epiapi - please reach out to us at: <a href="mailto:cotact@epiapi.com">contact@epiapi.com</a> if you do not have an agreement in place or for any other questions.</p>
 
 <p><strong>How to get Started</strong></p>
 
 <p><strong>Step 1. Read the documentation</strong>
 You are already doing this. Congratulations!</p>
 
-<p><strong>Step 2. Register a test account</strong>
-Sign up <a href="https://www.testwyre.com">here</a> to interact with our test environment. No need to upload any documents for the test envornment (though this will be required on production) - jump straight to Step 3.</p>
+<p><strong>Step 2. Register a test account</strong></p>
+
+<p>Sign up <a href="https://www.testwyre.com">here</a> to interact with our test environment. No need to upload any documents for the test envornment (though this will be required on production) - jump straight to Step 3.</p>
 
 <p><strong>Step 3. Verify your test account</strong>
 Contact our support team at <a href="mailto:support@epiapi.com">support@epiapi.com</a> so we can verify your test account and add test funds that you can start using. The test API does not execute real transactions so feel free to go crazy.</p>
@@ -421,7 +422,7 @@ Contact our support team at <a href="mailto:support@epiapi.com">support@epiapi.c
 We will send you links to join us on Slack or other chat apps (DingTalk, QQ etc) - any questions just ask!</p>
 
 <p><strong>Step 5. Register a production account</strong>
-Once testing has completed, you can register a live account <a href="https://testwyre.com">here</a>. You must go through the entire onboarding and verification process before you are allowed to interact with the account.</p>
+Once testing has completed, you can register a live account <a href="https://www.sendwyre.com">here</a>. You must go through the entire onboarding and verification process before you are allowed to interact with the account.</p>
 
 <p><strong>Step 6. Go live!</strong>
 Once fully onboarded you are ready to go!</p>
@@ -443,9 +444,8 @@ Once fully onboarded you are ready to go!</p>
 <h2 id='transport-method'>Transport Method</h2>
 <p>We provide a REST API that will always return a JSON Object as the response.</p>
 
-<p>During troubleshooting, please note that if your error response does not follow the previously mentioned format, the error is most likely due to a different endpoint.</p>
+<p>If the error response is in a different format it&#39;s problem not something wrong with epiapi but customers&#39; server.</p>
 <pre class="highlight json tab-json"><code><span class="err">For</span><span class="w"> </span><span class="err">successful</span><span class="w"> </span><span class="err">API</span><span class="w"> </span><span class="err">calls</span><span class="p">:</span><span class="w">
-
 </span><span class="p">{</span><span class="w">
         </span><span class="s2">"parameter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"parameter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ABCDEF"</span><span class="w">
@@ -453,7 +453,6 @@ Once fully onboarded you are ready to go!</p>
 </span><span class="p">}</span><span class="w">
 
 </span><span class="err">For</span><span class="w"> </span><span class="err">unsuccessful</span><span class="w"> </span><span class="err">API</span><span class="w"> </span><span class="err">calls</span><span class="p">:</span><span class="w">
-
 </span><span class="p">{</span><span class="w">
         </span><span class="s2">"language"</span><span class="p">:</span><span class="s2">"en"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"exceptionId"</span><span class="p">:</span><span class="s2">"ABCDEF"</span><span class="p">,</span><span class="w">
@@ -956,143 +955,68 @@ Once fully onboarded you are ready to go!</p>
 </thead><tbody>
 <tr>
 <td>X-Api-Key</td>
-<td>Your API key. Your key can be found <a href="https://support.sendwyre.com/%E4%B8%AD%E6%96%87%E5%B8%AE%E5%8A%A9%E5%8C%BA/api/api-key-%E8%AE%BE%E7%BD%AE%E6%8C%87%E5%8D%97">here</a></td>
+<td>Your API key. Your key can be found <a href="https://epiapi.zendesk.com/hc/en-us/articles/360009109612-API-Key-%E8%AE%BE%E7%BD%AE%E6%8C%87%E5%8D%97">here</a></td>
 </tr>
 <tr>
 <td>X-Api-Signature</td>
-<td>A signature used to verify the request was sent by the account holder. See Calculating the request signature.</td>
+<td>A signature used to verify the request was sent by the account holder. See <a href="#calculating-the-request-signature">Calculating the request signature</a>.</td>
 </tr>
 </tbody></table>
 
 <p>Additionally, you should include a <code>GET</code> parameter named timestamp which is the current time in <strong>millisecond epoch format</strong>. We use this timestamp to help protect against replay attacks.</p>
-
-<p><strong>Calculating the request signature</strong></p>
-
+<h2 id='calculating-the-request-signature'>Calculating the request signature</h2>
 <p>If you are sending a <code>GET</code> request you would sign the following (example):  <em>https://api.testwyre.com/v2/rates?timestamp=1426252182534</em></p>
 
 <p>If you are making a <code>POST</code> request you would sign the following (example): <em>https://api.testwyre.com/v2/transfers?timestamp=1426252182534</em></p>
 
 <p>Note for the <code>POST</code> request, you must append the request body to the string URL. Remember to send the request body exactly as you sign it, whitespace and all. The server calculates the signature based on exactly what&#39;s in the request body.</p>
 
-<p>Calculating the X-Api-Signature field is a two step process:</p>
+<p>++Calculating the X-Api-Signature field is a two step process:++</p>
 
 <ol>
 <li><p>Concatenate the request URL with the body of the HTTP request into a UTF-8 String. Use an empty string for the HTTP body in <code>GET</code> requests.</p></li>
 <li><p>Compute the signature using HMAC with SHA-256 and your API Secret Key.</p></li>
 </ol>
 <h2 id='srns'>SRNs</h2>
-<p>An SRN is a System Resource Name. It is a typed identifier that may reference any object within our platform. Many of our API calls and data schemas leverage SRNs in order to add flexibility and decouple services. All SRNs follow the same format:</p>
-
-<table><thead>
-<tr>
-<th>type</th>
-<th>Identifier</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>contact</td>
-<td>A contact id (contact:CO-123123123)</td>
-</tr>
-<tr>
-<td>paymentmethod</td>
-<td>A payment method such as a bank account (paymentmethod:PA-123123123)</td>
-</tr>
-<tr>
-<td>email</td>
-<td>An email address (email:test@epiapi.com)</td>
-</tr>
-<tr>
-<td>cellphone</td>
-<td>A cellphone number (cellphone:+8615555555555)</td>
-</tr>
-<tr>
-<td>account</td>
-<td>A plaform account (account:AC-123123123)</td>
-</tr>
-<tr>
-<td>wallet</td>
-<td>A single wallet (wallet:WA-123123123)</td>
-</tr>
-<tr>
-<td>transfer</td>
-<td>A transfer (possibly including a conversion) of currency (transfer:TF-123123123)</td>
-</tr>
-</tbody></table>
+<p>An SRN is a System Resource Name. It is a typed identifier that may reference any object within our platform. Many of our API calls and data schemas leverage SRNs in order to add flexibility and decouple services. All SRNs follow the same format:
+<br>
+type | Identifier
+--------- | -----------
+contact | A contact id (contact:CO-123123123)
+paymentmethod | A payment method such as a bank account (paymentmethod:PA-123123123)
+email | An email address (email:test@epiapi.com)
+cellphone | A cellphone number (cellphone:+8615555555555)
+account | A plaform account (account:AC-123123123)
+wallet | A single wallet (wallet:WA-123123123)
+transfer | A transfer (possibly including a conversion) of currency (transfer:TF-123123123)</p>
 <h2 id='fees'>Fees</h2>
 <p>Fees are caluculated by our system based on the contract signed by both parties. Our standard fee for VBA + daily settlement is 0.25%.</p>
 <h2 id='error-table'>Error Table</h2>
 <p>Successful requests will be a HTTP 200 response after any successful call. The body of successful requests depend on the endpoint.</p>
 
-<p>Whenever a problem occurs, we will respond to the client using a 4xx or 5xx status code. In this case, the body of the response will be an exception object which describes the problem.</p>
-
-<table><thead>
-<tr>
-<th>Exception</th>
-<th>Description</th>
-<th>HTTPs Status Code</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ValidationException</td>
-<td>The action failed due to problems with the request.</td>
-<td>400</td>
-</tr>
-<tr>
-<td>UnknownException</td>
-<td>A problem with our services internally. This should rarely happen.</td>
-<td>500</td>
-</tr>
-<tr>
-<td>InsufficientFundsException</td>
-<td>You requested the use of more funds in the specified currency than were available.</td>
-<td>400</td>
-</tr>
-<tr>
-<td>RateLimitException</td>
-<td>Your requests have exceeded your usage restrictions. Please contact us if you need this increased.</td>
-<td>429</td>
-</tr>
-<tr>
-<td>AccessDeniedException</td>
-<td>You lack sufficient privilege to perform the requested action.</td>
-<td>401</td>
-</tr>
-<tr>
-<td>TransferException</td>
-<td>There was a problem completing your transfer request.</td>
-<td>400</td>
-</tr>
-<tr>
-<td>NotFoundException</td>
-<td>You requested something that couldn&#39;t be located.</td>
-<td>400</td>
-</tr>
-<tr>
-<td>ValidationException</td>
-<td>There was a problem validating the input you supplied.</td>
-<td>400</td>
-</tr>
-<tr>
-<td>CustomerSupportException</td>
-<td>Please contact us at support@epiapi.com to resolve this!</td>
-<td>400</td>
-</tr>
-<tr>
-<td>MFARequiredException</td>
-<td>An MFA action is required to complete the request. In general you should not get this exception while using API keys.</td>
-<td>400</td>
-</tr>
-</tbody></table>
+<p>Whenever a problem occurs, we will respond to the client using a ==4xx== or ==5xx== status code. In this case, the body of the response will be an exception object which describes the problem.
+<br>
+Exception | Description | HTTPs Status Code
+--------- | ----------- | -----------
+ValidationException | The action failed due to problems with the request. | 400
+UnknownException | A problem with our services internally. This should rarely happen. | 500
+InsufficientFundsException | You requested the use of more funds in the specified currency than were available. | 400
+RateLimitException | Your requests have exceeded your usage restrictions. Please contact us if you need this increased. | 429
+AccessDeniedException | You lack sufficient privilege to perform the requested action. | 401
+TransferException | There was a problem completing your transfer request. | 400
+NotFoundException | You requested something that couldn&#39;t be located. | 400
+ValidationException | There was a problem validating the input you supplied. | 400
+CustomerSupportException | Please contact us at support@epiapi.com to resolve this! | 400
+MFARequiredException | An MFA action is required to complete the request. In general you should not get this exception while using API keys. | 400</p>
 
 <p>All exceptions will carry a subType parameter which exposes more information about the problem. Additionally, some ValidationException errors will carry with them two fields, problematicField and problematicValue, denoting the field which caused the failure.</p>
 
-<p>A few typical ValidationException subtypes:</p>
+<p>++A few typical ValidationException subtypes:++</p>
 
 <p>FIELD_REQUIRED
 INVALID_VALUE
 TRANSACTION_AMOUNT_TOO_SMALL
 UNSUPPORTED_SOURCE_CURRENCY
-SENDER_PROVIDED_ID_IN_USE
 CANNOT_SEND_SELF_FUNDS
 INVALID_PAYMENT_METHOD
 PAYMENT_METHOD_INACTIVE
@@ -1113,7 +1037,7 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY</p>
 <p><code>POST</code> https://api.testwyre.com/v2/wallets</p>
 
 <pre class="center-column">
-{   
+{
   "name":"youruniquename",
   "type":"VBA",
   "callbackUrl":"https://your.website.io/callback",
@@ -1161,172 +1085,47 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY</p>
 </pre>
 
 <p><br>
-<br>
-<br></p>
-
-<table><thead>
-<tr>
-<th>Fields(* means mandatory)</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>&quot;entityType&quot; *</td>
-<td>&quot;CORP&quot;、“M”、“F” available</td>
-</tr>
-<tr>
-<td>&quot;entityScope&quot; *</td>
-<td>&quot;Shopping/Retail&quot;</td>
-</tr>
-<tr>
-<td>&quot;email&quot; *</td>
-<td>&quot;test+merchant@epiapi.com&quot;</td>
-</tr>
-<tr>
-<td>&quot;phoneNumber&quot; *</td>
-<td>&quot;13111111111&quot;</td>
-</tr>
-<tr>
-<td>&quot;ip&quot; *</td>
-<td>The IP address of the user when opening the acount</td>
-</tr>
-<tr>
-<td>&quot;nameCn&quot; *</td>
-<td>&quot;法人姓名&quot;</td>
-</tr>
-<tr>
-<td>&quot;nameEn&quot; *</td>
-<td>&quot;Legal Rep&quot;</td>
-</tr>
-<tr>
-<td>&quot;dateOfBirth&quot; *</td>
-<td>UNIX (milliseconds)</td>
-</tr>
-<tr>
-<td>&quot;address&quot; *</td>
-<td>(street 2 can be bland if not needed)</td>
-</tr>
-<tr>
-<td>&quot;street1&quot;</td>
-<td>&quot;东四北大街107号&quot;</td>
-</tr>
-<tr>
-<td>&quot;street2&quot;</td>
-<td>&quot;克林大厦107室&quot;</td>
-</tr>
-<tr>
-<td>&quot;city&quot;</td>
-<td>&quot;beijing&quot;</td>
-</tr>
-<tr>
-<td>&quot;state&quot;</td>
-<td>&quot;beijing&quot;</td>
-</tr>
-<tr>
-<td>&quot;country&quot;</td>
-<td>&quot;CN&quot;</td>
-</tr>
-<tr>
-<td>&quot;postalCode&quot;</td>
-<td>&quot;100007&quot;</td>
-</tr>
-<tr>
-<td>&quot;idNumber&quot; *</td>
-<td>&quot;432524199902287897&quot;</td>
-</tr>
-<tr>
-<td>&quot;idDoc&quot; *</td>
-<td>null</td>
-</tr>
-<tr>
-<td>&quot;merchantId&quot;</td>
-<td>&quot;A00000&quot;</td>
-</tr>
-<tr>
-<td>&quot;merchantType&quot;</td>
-<td>&quot;Amazon&quot;</td>
-</tr>
-<tr>
-<td>&quot;expectedMonthlySales&quot;</td>
-<td>40000</td>
-</tr>
-<tr>
-<td>&quot;shopName&quot;</td>
-<td>&quot;MyBrand&quot;</td>
-</tr>
-<tr>
-<td>&quot;website&quot;</td>
-<td>&quot;https://merchant.website.com&quot;</td>
-</tr>
-<tr>
-<td>&quot;repAaddress&quot;(* CORP only)</td>
-<td>(street 2 can be bland if not needed)</td>
-</tr>
-<tr>
-<td>&quot;street1&quot;</td>
-<td>&quot;东四北大街107号&quot;</td>
-</tr>
-<tr>
-<td>&quot;street2&quot;</td>
-<td>&quot;克林大厦107室&quot;</td>
-</tr>
-<tr>
-<td>&quot;city&quot;</td>
-<td>&quot;beijing&quot;</td>
-</tr>
-<tr>
-<td>&quot;state&quot;</td>
-<td>&quot;beijing&quot;</td>
-</tr>
-<tr>
-<td>&quot;country&quot;</td>
-<td>&quot;CN&quot;</td>
-</tr>
-<tr>
-<td>&quot;postalCode&quot;</td>
-<td>&quot;100007&quot;</td>
-</tr>
-<tr>
-<td>&quot;companyNameCn&quot;(* CORP only)</td>
-<td>&quot;ABC有限责任公司&quot;</td>
-</tr>
-<tr>
-<td>&quot;companyNameEn&quot;( * CORP only)</td>
-<td>&quot;ABC Company Limited&quot;</td>
-</tr>
-<tr>
-<td>&quot;registrationNumber&quot;(* CORP only)</td>
-<td>&quot;123456789&quot;</td>
-</tr>
-<tr>
-<td>&quot;coiDoc&quot;(* CORP only)</td>
-<td>null</td>
-</tr>
-<tr>
-<td>&quot;salesDoc&quot;(may be required for high volume clients)</td>
-<td>null</td>
-</tr>
-<tr>
-<td>&quot;dateOfEstablishment&quot; *</td>
-<td>UNIX (milliseconds)</td>
-</tr>
-<tr>
-<td>&quot;beneficialOwners&quot;(HK CORP only)</td>
-<td></td>
-</tr>
-<tr>
-<td>&quot;fullName&quot;</td>
-<td>&quot;Richard&quot;</td>
-</tr>
-<tr>
-<td>&quot;idNumber&quot;</td>
-<td>&quot;1231321312&quot;</td>
-</tr>
-<tr>
-<td>&quot;idDoc&quot;</td>
-<td>null</td>
-</tr>
-</tbody></table>
+Fields(* means mandatory)| Description
+---------|-----------
+&quot;entityType&quot; * | &quot;CORP&quot;、“M”、“F” available
+&quot;entityScope&quot; * | &quot;Shopping/Retail&quot;
+&quot;email&quot; * | &quot;test+merchant@epiapi.com&quot;
+&quot;phoneNumber&quot; * | &quot;13111111111&quot;
+&quot;ip&quot; * | The IP address of the user when opening the acount
+&quot;nameCn&quot; * | &quot;法人姓名&quot;
+&quot;nameEn&quot; * | &quot;Legal Rep&quot;
+&quot;dateOfBirth&quot; * | UNIX (milliseconds)
+&quot;address&quot; * | (street 2 can be bland if not needed)
+&quot;street1&quot; | &quot;东四北大街107号&quot;
+&quot;street2&quot; | &quot;克林大厦107室&quot;
+&quot;city&quot; | &quot;beijing&quot;
+&quot;state&quot; | &quot;beijing&quot;
+&quot;country&quot; |&quot;CN&quot;
+&quot;postalCode&quot; | &quot;100007&quot;
+&quot;idNumber&quot; * | &quot;432524199902287897&quot;
+&quot;idDoc&quot; * | null
+&quot;merchantId&quot; | &quot;A00000&quot;
+&quot;merchantType&quot; | &quot;Amazon&quot;
+&quot;expectedMonthlySales&quot; | 40000
+&quot;shopName&quot; | &quot;MyBrand&quot;
+&quot;website&quot; | &quot;https://merchant.website.com&quot;
+&quot;repAaddress&quot;(* CORP only) | (street 2 can be bland if not needed)
+&quot;street1&quot;| &quot;东四北大街107号&quot;
+&quot;street2&quot;| &quot;克林大厦107室&quot;
+&quot;city&quot;| &quot;beijing&quot;
+&quot;state&quot; | &quot;beijing&quot;
+&quot;country&quot;| &quot;CN&quot;
+&quot;postalCode&quot; | &quot;100007&quot;
+&quot;companyNameCn&quot;(* CORP only)| &quot;ABC有限责任公司&quot;
+&quot;companyNameEn&quot;( * CORP only)| &quot;ABC Company Limited&quot;
+&quot;registrationNumber&quot;(* CORP only)| &quot;123456789&quot;
+&quot;coiDoc&quot;(* CORP only)| null
+&quot;salesDoc&quot;(may be required for high volume clients) | null
+&quot;dateOfEstablishment&quot; * | UNIX (milliseconds)
+&quot;beneficialOwners&quot;(HK CORP only) |
+&quot;fullName&quot;| &quot;Richard&quot;
+&quot;idNumber&quot;| &quot;1231321312&quot;
+&quot;idDoc&quot;| null</p>
 <pre class="highlight plaintext"><code>curl -v -XPOST 'https://api.testwyre.com/v2/wallets' \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: {api-key}" \
@@ -1378,13 +1177,14 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY</p>
       </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Once a new user requests a VBA via your platform, <a href="/#wallets">create a wallet</a> for that user.</p>
+<p>Once a new user requests a VBA via your platform, <a href="#wallets">create a wallet</a> for that user.</p>
 
-<p>Note: You should collect the required documentation and pass through to us through this endpoint. The data is used for KYC purposes and is necessary in order to open the virtual banking facilities. The wallet will be opened immediately, and the banking information will be appended to the account once approved (after step 3)</p>
+<p>Note:
+1.You should collect the required documentation and pass through to us through this endpoint. The data is used for KYC purposes and is necessary in order to open the virtual banking facilities. The wallet will be opened immediately, and the banking information will be appended to the account once approved (after step 3)</p>
 
-<p>Each wallet will automatically be assigned a walletId.</p>
+<p>2.Each wallet will automatically be assigned a walletId.</p>
 
-<p>Take note of the <code>walletId</code> that gets generated in the response as this will be used later to manage the VBA.</p>
+<p>3.Take note of the <code>walletId</code> that gets generated in the response as this will be used later to manage the VBA.</p>
 <h3 id='step-2-upload-kyc-documents'>Step 2. Upload KYC documents</h3>
 <p><code>POST</code> https://api.testwyre.com/v2/documents</p>
 
@@ -1405,9 +1205,10 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY</p>
 </tr>
 </tbody></table>
 
-<p>E.g. <code>POST</code> https://api.testwyre.com/v2/documents?ownerSrn=wallet:WA-123123123&amp;filename=coiDoc.pdf</p>
+<p><br>
+E.g. <code>POST</code> https://api.testwyre.com/v2/documents?ownerSrn=wallet:WA-123123123&amp;filename=coiDoc.pdf</p>
 
-<p>In the body of the request simply include the raw bytes of file to be uploaded.</p>
+<p>==In the body of the request simply include the raw bytes of file to be uploaded.==</p>
 <pre class="highlight java tab-java"><code><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">computeSignature2</span><span class="o">(</span><span class="n">String</span> <span class="n">secretKey</span><span class="o">,</span><span class="n">String</span> <span class="n">url</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">reqData</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">UnsupportedEncodingException</span> <span class="o">{</span>
 
        <span class="kt">byte</span><span class="o">[]</span> <span class="n">urlBytes</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span>
@@ -1436,34 +1237,21 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY</p>
        <span class="o">}</span>
    <span class="o">}</span>
 </code></pre>
-<p>Finally, the content-type header should reflect the file type - allowed content-types include:</p>
+<p>Finally, the content-type header should reflect the file type - allowed content-types include:
+<br>
+Content Type |
+--------- |
+&quot;application/msword&quot; |
+&quot;application/vnd.openxmlformats-officedocument.wordprocessingml.document&quot; |
+&quot;application/pdf&quot; |
+&quot;image/jpg&quot; |
+&quot;image/jpeg&quot; |
+&quot;image/png&quot; |</p>
 
-<table><thead>
-<tr>
-<th>Content Type</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>&quot;application/msword&quot;</td>
-</tr>
-<tr>
-<td>&quot;application/vnd.openxmlformats-officedocument.wordprocessingml.document&quot;</td>
-</tr>
-<tr>
-<td>&quot;application/pdf&quot;</td>
-</tr>
-<tr>
-<td>&quot;image/jpg&quot;</td>
-</tr>
-<tr>
-<td>&quot;image/jpeg&quot;</td>
-</tr>
-<tr>
-<td>&quot;image/png&quot;</td>
-</tr>
-</tbody></table>
+<p><br></p>
 
-<p>Once the file is uploaded the user will receive a &quot;document&quot; object as the response. Take the ID from this (e.g. DO-123123123) and provide it in the coiDoc, idDoc or salesDoc fields.</p>
+<p>Once the file is uploaded the user will receive a &quot;document&quot; object as the response. Take the ID from this (e.g. DO-123123123) and provide it in the coiDoc, idDoc or salesDoc fields.
+<br></p>
 
 <table><thead>
 <tr>
@@ -1498,10 +1286,8 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY</p>
   }
 }
 </pre>
-
-<p><br></p>
 <h3 id='step-4-check-for-banking-data'>Step 4. Check for banking data</h3>
-<p>Banking data is added as an <code>object</code> to the <code>vbaData</code> setcion of the wallet object.</p>
+<p>Banking data is added as an <code>object</code> to the <code>vbaData</code> section of the wallet object.</p>
 
 <pre class="center-column">
 {   
@@ -1514,20 +1300,48 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY</p>
   }
 </pre>
 
-<p><br></p>
-
 <p>Query the wallet using <code>GET</code> https://api.testwyre.com/v2/wallet/[walletID]. Limit your queries to once per hour and once the data is added turn off the queries. In the future we will add a Callback for this event.</p>
 
 <p>Once received you can now pass this information to your user to update their settlement information with their merchant platform.</p>
 <h3 id='step-5-receiving-funds-and-callbacks'>Step 5. Receiving Funds and Callbacks</h3>
 <p>Whenever we receive a payment to the <code>accountNumber</code>, once approved (note: payments from unapproved platforms will be rejected) a callback will be sent if you have set up a <code>callbackUrl</code>.</p>
 
-<p>See <a href="#callbacks-2">Callbacks</a></p>
+<p>See <a href="#callbacks">Callbacks</a></p>
 
 <p>If you wish to validate the callback you can use the <code>id</code> to <code>GET</code> the necessary information. For transfers within our system the id will belong to a transfer (e.g. TF-123123123) and you can query:
 <em>https://api.testwyre.com/v2/transfer/[id]</em></p>
 
 <p>For the initial funding transation from outside our system (such as Amazon) the id will belong to a transaction (e.g. TR-123123123) and you can query: <em>https://api.testwyre.com/v2//transaction/[id]</em></p>
+
+<p><strong>Result Format</strong></p>
+
+<pre class="center-column">
+{
+  "createdAt":1531445525097,
+  "id":"TR-F3947W8C2C6",
+  "source":"transfer:TF-HP4A42EC6DX",
+  "dest":"wallet:WA-CF9RFZ7QU6W",
+  "currency":"USD",
+  "amount":5005.00,
+  "status":"CONFIRMED",
+  "confirmedAt":1531445525097,
+  "cancelledAt":null,
+  "reversedAt":null,
+  "message":"Deposit for transfer TF-HP4A42EC6DX",
+  "allowOverdraft":true,
+  "authorizer":"account:AC-XXXXXXXXX",
+  "senderProvidedId":null,
+  "reversedBy":null,
+  "fees":0,
+  "feesDest":null,
+  "metadata":{
+    "Description":"Pending: Transfer of $5005.00 to wallet:WA-CF9RFZ7QU6W",
+    "transferId":"TF-HP4A42EC6DX"},
+    "tags":[],
+    "sourceFees":null,
+    "destFees":null
+  }
+</pre>
 <h3 id='step-6-transfer-usd-from-wallet-to-account'>Step 6. Transfer USD from wallet to Account</h3>
 <p><code>POST</code> https://api.testwyre.com/v2/transfers</p>
 
@@ -1543,10 +1357,8 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY</p>
 }
 </pre>
 
-<p><br></p>
-
 <p>Your account ID can be found <a href="https://www.testwyre.com/settings/basic-info">here</a>.
-Then transfer USD frm the Account to your pre-arranged Settlement Account (note: during setup - epiapi will create this Settlement Account as a Payment Method)</p>
+Then transfer USD from the Account to your pre-arranged Settlement Account (note: during setup - epiapi will create this Settlement Account as a <code>paymentMethod</code>)</p>
 
 <pre class="center-column">
 {
@@ -1561,77 +1373,31 @@ Then transfer USD frm the Account to your pre-arranged Settlement Account (note:
 }
 </pre>
 
-<p><br></p>
-
 <p>Set <code>autoConfirm</code> to &quot;true&quot; to automatically confirm the transfer.</p>
 <h1 id='account'>Account</h1><h2 id='account-details'>Account Details</h2>
 <p>This endpoint retrieves all the information related to your account.</p>
 
 <p><strong>Definition</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/account</p>
-
-<p>When checking your balance you should refer to the <code>availableBalance</code> object to see how much of a given currency you have available to transfer.</p>
-
-<table><thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>An internal id corresponding to your account.</td>
-</tr>
-<tr>
-<td>createdAt</td>
-<td>Time at which the account was created.</td>
-</tr>
-<tr>
-<td>updatedAt</td>
-<td>The last time the account was updated.</td>
-</tr>
-<tr>
-<td>loginAt</td>
-<td>The last time the account was logged in to.</td>
-</tr>
-<tr>
-<td>rank</td>
-<td>The account&#39;s rank. Used for things like limits on the accounts option to purchase digital currencies.</td>
-</tr>
-<tr>
-<td>profile</td>
-<td>A set of fields that the user has permission to modify.</td>
-</tr>
-<tr>
-<td>paymentMethods</td>
-<td>A list of payment methods available on the account.</td>
-</tr>
-<tr>
-<td>identities</td>
-<td>An array of identities (cellphone numbers, email addresses) associated with the account. Each identity includes information about when they were created and when they were verified.</td>
-</tr>
-<tr>
-<td>depositAddresses</td>
-<td>A map of digital currency deposit addresses for the account.</td>
-</tr>
-<tr>
-<td>totalBalances</td>
-<td>A map of the total amount of funds in the user&#39;s account. This is the sum of the pending balances and the available balances.</td>
-</tr>
-<tr>
-<td>availableBalances</td>
-<td>A map of the total amount of funds available to be withdrawn immediately from the account. If you are performing a check to see if the account has sufficient funds before making a withdrawal, you should check this balance.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>The email tied to the account.</td>
-</tr>
-<tr>
-<td>cellphone</td>
-<td>The cellphone number tied to the account.</td>
-</tr>
-</tbody></table>
+<p><code>GET</code> https://api.testwyre.com/v2/account
+<br>
+When checking your balance you should refer to the <code>availableBalance</code> object to see how much of a given currency you have available to transfer.
+<br>
+Field | Description
+--------- | -----------
+ID | An internal id corresponding to your account.
+createdAt | Time at which the account was created.
+updatedAt | The last time the account was updated.
+loginAt | The last time the account was logged in to.
+rank | The account&#39;s rank. Used for things like limits on the accounts option to purchase digital currencies.
+profile | A set of fields that the user has permission to modify.
+paymentMethods | A list of payment methods available on the account.
+identities |  An array of identities (cellphone numbers, email addresses) associated with the account. Each identity includes information about when they were created and when they were verified.
+depositAddresses | A map of digital currency deposit addresses for the account.
+totalBalances | A map of the total amount of funds in the user&#39;s account. This is the sum of the pending balances and the available balances.
+availableBalances | A map of the total amount of funds available to be withdrawn immediately from the account. If you are performing a check to see if the account has sufficient funds before making a withdrawal, you should check this balance.
+email | The email tied to the account.
+cellphone | The cellphone number tied to the account.</p>
 
 <p><strong>Result Format</strong></p>
 
@@ -2007,9 +1773,9 @@ Then transfer USD frm the Account to your pre-arranged Settlement Account (note:
 </code></pre>
 <p><strong>Definition</strong></p>
 
-<p><code>POST</code> https://api.testwyre.com/v2/wallets</p>
-
-<p><strong>Parameters</strong></p>
+<p><code>POST</code> https://api.testwyre.com/v2/wallets
+<br>
+<strong>Parameters</strong></p>
 
 <table><thead>
 <tr>
@@ -2044,6 +1810,8 @@ Then transfer USD frm the Account to your pre-arranged Settlement Account (note:
 <td>no</td>
 </tr>
 </tbody></table>
+
+<p><br></p>
 
 <p><strong>Result Format</strong></p>
 
@@ -2083,9 +1851,9 @@ curl -XPOST 'https://api.testwyre.com/v2/wallets/batch?pretty' \
 
 <p><strong>Definition</strong></p>
 
-<p><code>POST</code> https://api.testwyre.com/v2/wallets/batch</p>
-
-<p><strong>Parameters</strong></p>
+<p><code>POST</code> https://api.testwyre.com/v2/wallets/batch
+<br>
+<strong>Parameters</strong></p>
 
 <table><thead>
 <tr>
@@ -2182,9 +1950,9 @@ curl -XPOST 'https://api.testwyre.com/v2/wallets/batch?pretty' \
 
 <p><strong>Definition</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/wallet/{walletId}</p>
-
-<p><strong>Parameters</strong></p>
+<p><code>GET</code> https://api.testwyre.com/v2/wallet/{walletId}
+<br>
+<strong>Parameters</strong></p>
 
 <table><thead>
 <tr>
@@ -2202,11 +1970,12 @@ curl -XPOST 'https://api.testwyre.com/v2/wallets/batch?pretty' \
 </tr>
 </tbody></table>
 
-<p><strong>Definition</strong></p>
+<p><br>
+<strong>Definition</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/wallet/</p>
-
-<p><strong>Parameters</strong></p>
+<p><code>GET</code> https://api.testwyre.com/v2/wallet/
+<br>
+<strong>Parameters</strong></p>
 
 <table><thead>
 <tr>
@@ -2223,6 +1992,8 @@ curl -XPOST 'https://api.testwyre.com/v2/wallets/batch?pretty' \
 <td>yes</td>
 </tr>
 </tbody></table>
+
+<p><br></p>
 
 <p><strong>Results Format</strong></p>
 
@@ -2451,55 +2222,19 @@ curl -XPOST 'https://api.testwyre.com/v2/wallets/batch?pretty' \
 
 <p><strong>Definition</strong></p>
 
-<p><code>UPDATE</code> https://api.testwyre.com/v2/wallet/{walletId}</p>
-
-<p><strong>Parameters</strong></p>
-
-<table><thead>
-<tr>
-<th>Param</th>
-<th>Type</th>
-<th>Description</th>
-<th>Required</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>walletId</td>
-<td>string</td>
-<td>ID of the wallet</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>name</td>
-<td>string</td>
-<td>Updated identifier for the user</td>
-<td>no</td>
-</tr>
-<tr>
-<td>callbackUrl</td>
-<td>string</td>
-<td>Updated callback</td>
-<td>no</td>
-</tr>
-<tr>
-<td>notes</td>
-<td>string</td>
-<td>Updated notes</td>
-<td>no</td>
-</tr>
-</tbody></table>
+<p><code>POST</code> https://api.testwyre.com/v2/wallet/{walletId}</p>
 <h2 id='delete-wallet'>Delete Wallet</h2><pre class="highlight plaintext"><code>
 curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
   -H "X-Api-Key: {api-key}" \
   -H "X-Api-Signature: {signature}"
 </code></pre>
-<p>This endpoint removes the wallet from your account. Note that the wallet data is retained in our system for compliance purposes. Once an account is deleted the Virtual Bank Account associated with the wallet will be closed and no longer availabel for receiving funds. <br></p>
+<p>This endpoint removes the wallet from your account. Note that the wallet data is retained in our system for compliance purposes. Once an account is deleted the Virtual Bank Account associated with the wallet will be closed and no longer availabel for receiving funds. </p>
 
 <p><strong>Definition</strong></p>
 
-<p><code>DELETE</code> https://api.testwyre.com/v2/wallet/{walletId}</p>
-
-<p><strong>Parameters</strong></p>
+<p><code>DELETE</code> https://api.testwyre.com/v2/wallet/{walletId}
+<br>
+<strong>Parameters</strong></p>
 
 <table><thead>
 <tr>
@@ -2519,11 +2254,11 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 <h2 id='list-wallets'>List Wallets</h2>
 <p>This endpoint will return all the child wallets you have created.</p>
 
-<p><strong>Definition</strong> <BR></p>
+<p><strong>Definition</strong> </p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/wallets <BR></p>
-
-<p><strong>Parameters</strong></p>
+<p><code>GET</code> https://api.testwyre.com/v2/wallets 
+<br>
+<strong>Parameters</strong></p>
 
 <table><thead>
 <tr>
@@ -2547,6 +2282,8 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 </tr>
 </tbody></table>
 
+<p><br></p>
+
 <p><strong>Result Format</strong></p>
 
 <pre class="center-column">
@@ -2565,125 +2302,16 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
       "notes": "nope",
       "name": "Person A",
       "id": "WA-XM4L3JMUQGF"
-    }
+     }
   }
 </pre>
-<h2 id='callbacks'>Callbacks</h2>
-<p>We provide a series of HTTP callbacks that allow you to notify users when funds have been deposited and when they become available.</p>
-
-<p><strong>When callbacks are sent</strong>
-Callbacks are sent whenever a transactional event occurs that will affect the wallet&#39;s balance. Examples include:</p>
-
-<ul>
-<li>Incoming pending transaction</li>
-<li>Pending transaction confirmed</li>
-<li>Outgoing transaction</li>
-</ul>
-
-<p><strong>Callback Acceptance and Retries</strong>
-Your system should respond to the callback request with a 200 response. If we do not receive a valid repsonse our system will continue to attempt to send the request.</p>
-
-<p><strong>Result Format</strong></p>
-
-<pre class="center-column">
-{
-  "createdAt":1531445525097,
-  "id":"TR-F3947W8C2C6",
-  "source":"transfer:TF-HP4A42EC6DX",
-  "dest":"wallet:WA-CF9RFZ7QU6W",
-  "currency":"USD",
-  "amount":5005.00,
-  "status":"CONFIRMED",
-  "confirmedAt":1531445525097,
-  "cancelledAt":null,
-  "reversedAt":null,
-  "message":"Deposit for transfer TF-HP4A42EC6DX",
-  "allowOverdraft":true,
-  "authorizer":"account:AC-XXXXXXXXX",
-  "senderProvidedId":null,
-  "reversedBy":null,
-  "fees":0,
-  "feesDest":null,
-  "metadata":{
-    "Description":"Pending: Transfer of $5005.00 to wallet:WA-CF9RFZ7QU6W",
-    "transferId":"TF-HP4A42EC6DX"},
-    "tags":[],
-    "sourceFees":null,
-    "destFees":null
-  }
-</pre>
-
-<p>The callback payload will be a JSON representation of the transaction that has caused the callback to trigger.</p>
 <h1 id='transfers'>Transfers</h1><h2 id='introduction'>Introduction</h2>
 <p>Transfers represent the building blocks of our API. Our Transfer API is an incredibly versatile way of moving funds not only externally but internally as well, whether it&#39;s through internal account management or internal exchanges.  Additionally, you can specify differing source and destination currencies and the funds will automatically exchanged into the appropriate currency in our backend.
-Anytime you want to move funds around on the platform you will create a Transfer. The Transfer will go through a number of states as funds are moved to the destination of your choice.<BR></p>
+Anytime you want to move funds around on the platform you will create a Transfer. The Transfer will go through a number of states as funds are moved to the destination of your choice.<Br></p>
 <h2 id='transfers-2'>Transfers</h2>
-<p><strong>Definition</strong>
-<code>POST</code> https://api.testwyre.com/v2/transfer/</p>
+<p><strong>Definition</strong></p>
 
-<table><thead>
-<tr>
-<th>Param</th>
-<th>Type</th>
-<th>Description</th>
-<th>required</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>source</td>
-<td>string</td>
-<td>An SRN representing an account that the funds will be retrieved from.</td>
-<td>no</td>
-</tr>
-<tr>
-<td>sourceAmount</td>
-<td>double</td>
-<td>The amount to withdrawal from the source, in units of <code>sourceCurrency</code>. Only include <code>sourceAmount</code> OR <code>destAmount</code>, not both.</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>sourceCurrency</td>
-<td>string</td>
-<td>The currency to withdrawal from the source wallet.</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>dest</td>
-<td>string</td>
-<td>An email address, cellphone number, digital currency address, payment method, wallet to send the digital currency to. Note: cellphone numbers are assumed to be a US number, for international numbers include a &#39;+&#39; and the country code as the prefix.</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>destAmount</td>
-<td>double</td>
-<td>Specifies the total amount of currency to deposit (as defined in depositCurrency). Only include <code>sourceAmount</code> OR <code>destAmount</code>, not both.</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>destCurrency</td>
-<td>string</td>
-<td>The currency to deposit. If not provided, the deposit will be the same as the withdrawal currency (no exchange performed).</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>customId</td>
-<td>string</td>
-<td>An optional tag that must be unique for each transaction if used or transaction will fail.</td>
-<td>no</td>
-</tr>
-<tr>
-<td>amountIncludesFees</td>
-<td>boolean</td>
-<td>Optional- if true, the amount given (source, dest, equiv) will be treated as already including the fees and nothing in addition will be withdrew.</td>
-<td>no</td>
-</tr>
-<tr>
-<td>preview</td>
-<td>boolean</td>
-<td>If true, creates a quote transfer object, but does not execute a real transfer.</td>
-<td>no</td>
-</tr>
-</tbody></table>
+<p><code>POST</code> https://api.testwyre.com/v2/transfer/</p>
 <h2 id='create-transfer'>Create Transfer</h2>
 <pre class="center-column">
 {  
@@ -2696,101 +2324,36 @@ Anytime you want to move funds around on the platform you will create a Transfer
 }
 </pre>
 
-<p><br>
-This endpoint creates a new money transfer.</p>
+<p>This endpoint creates a new money transfer.</p>
 
-<p><strong>Definition</strong>
-<code>POST</code> https://api.testwyre.com/v2/transfers</p>
+<p><strong>Definition</strong></p>
 
-<table><thead>
-<tr>
-<th>Param</th>
-<th>Type</th>
-<th>Description</th>
-<th>required</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>source</td>
-<td>string</td>
-<td>An SRN representing an account that the funds will be retrieved from.</td>
-<td>no</td>
-</tr>
-<tr>
-<td>sourceAmount</td>
-<td>double</td>
-<td>The amount to withdrawal from the source, in units of <code>sourceCurrency</code>. Only include <code>sourceAmount</code> OR <code>destAmount</code>, not both.</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>sourceCurrency</td>
-<td>string</td>
-<td>An ISO 3166-1 alpha-3 currency code that will be deducted from your account.</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>dest</td>
-<td>string</td>
-<td>An email address, cellphone number, digital currency address, payment method, wallet to send the digital currency to. Note: cellphone numbers are assumed to be a US number, for international numbers include a &#39;+&#39; and the country code as the prefix.</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>destAmount</td>
-<td>double</td>
-<td>Specifies the total amount of currency to deposit (as defined in depositCurrency). Only include <code>sourceAmount</code> OR <code>destAmount</code>, not both.</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>destCurrency</td>
-<td>string</td>
-<td>An ISO 3166-1 alpha-3 currency code that matches the dest type. The destCurrency can be the same or different from the sourceCurrency. If they are different an exchange will automatically occur.</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>message</td>
-<td>string</td>
-<td>An optional user visible message to be sent with the transaction.</td>
-<td>no</td>
-</tr>
-<tr>
-<td>callbackUrl</td>
-<td>string</td>
-<td>An optional url that Wyre will POST a status callback to.</td>
-<td>no</td>
-</tr>
-<tr>
-<td>autoConfirm</td>
-<td>boolean</td>
-<td>An optional parameter to automatically confirm the transfer order.</td>
-<td>no</td>
-</tr>
-<tr>
-<td>customId</td>
-<td>string</td>
-<td>An optional tag that must be unique for each transaction if used or transaction will fail.</td>
-<td>no</td>
-</tr>
-<tr>
-<td>amountIncludesFees</td>
-<td>boolean</td>
-<td>Optional- if true, the amount given (source, dest, equiv) will be treated as already including the fees and nothing in addition will be withdrew.</td>
-<td>no</td>
-</tr>
-<tr>
-<td>muteMessages</td>
-<td>boolean</td>
-<td>When true, disables outbound emails/messages to the destination.</td>
-<td>no</td>
-</tr>
-</tbody></table>
+<p><code>POST</code> https://api.testwyre.com/v2/transfers</p>
 
-<p>Once you&#39;ve created the transfer it will be in an UNCONFIRMED state. You will have 30 seconds to review the transfer and <a href="#confirm-transfer">confirm it</a> before the quote expires. If the quote expires you&#39;ll have to reissue the transfer request and confirm the new transfer. However you can CONFIRM the transfer AUTOMATICALLY by setting <code>autoConfirm</code> to <code>true</code>.</p>
+<p><strong>Parameters</strong>
+Param | Type | Description | required
+--------- | ----------- | ----------- | -----------
+source | string | An SRN representing an account that the funds will be retrieved from. | no
+sourceAmount | double | The amount to withdrawal from the source, in units of <code>sourceCurrency</code>. Only include <code>sourceAmount</code> OR <code>destAmount</code>, not both. | yes
+sourceCurrency | string | An ISO 3166-1 alpha-3 currency code that will be deducted from your account. | yes
+dest | string | An payment method, wallet to send the digital currency to. Note: cellphone numbers are assumed to be a US number, for international numbers include a &#39;+&#39; and the country code as the prefix. | yes
+destAmount | double | Specifies the total amount of currency to deposit (as defined in depositCurrency). Only include <code>sourceAmount</code> OR <code>destAmount</code>, not both. | yes
+destCurrency | string | An ISO 3166-1 alpha-3 currency code that matches the dest type. The destCurrency can be the same or different from the sourceCurrency. If they are different an exchange will automatically occur. | yes
+message | string | An optional user visible message to be sent with the transaction. | no
+callbackUrl | string | An optional url that Wyre will POST a status callback to. | no
+autoConfirm | boolean | An optional parameter to automatically confirm the transfer order. | no
+customId | string | An optional tag that must be unique for each transaction if used or transaction will fail. | no
+amountIncludesFees | boolean | Optional- if true, the amount given (source, dest, equiv) will be treated as already including the fees and nothing in addition will be withdrew. | no
+preview | boolean | If true, creates a quote transfer object, but does not execute a real transfer. | no
+muteMessages | boolean | When true, disables outbound emails/messages to the destination. | no
+<br></p>
+
+<p>Once you&#39;ve created the transfer it will be in an ==UNCONFIRMED== state. You will have 30 seconds to review the transfer and <a href="#confirm-transfer">confirm it</a> before the quote expires. If the quote expires you&#39;ll have to reissue the transfer request and confirm the new transfer. However you can CONFIRM the transfer AUTOMATICALLY by setting <code>autoConfirm</code> to <code>true</code>.</p>
 
 <p>When reviewing the transfer the main things you&#39;ll want to check out are the following:</p>
 
-<p><code>exchangeRate</code> - The quoted exchange rate for the transfer
-<code>totalFees</code> - The total fees will always be represented in the source currency. To convert totalFees to the destination currency, multiply totalFees by the exchange rate. Note that this object includes all Wyre fees and miner fees if applicable.
-<code>sourceAmount/destAmount</code> - Depending on the request you made, you&#39;ll want to double check these fields at this stage and make sure that you&#39;re either sending or receiving the amount you expected. Note the values for these fields depend on the <code>amountIncludesFees</code> parameter.</p>
+<p><code>exchangeRate</code> - The quoted exchange rate for the transfer totalFees - The total fees will always be represented in the source currency. To convert totalFees to the destination currency, multiply totalFees by the exchange rate. Note that this object includes all epiapi fees.
+<code>sourceAmount/destAmount</code> - Depending on the request you made, you&#39;ll want to double check these fields at this stage and make sure that you&#39;re either sending or receiving the amount you expected. Note the values for these fields depend on the amountIncludesFees parameter.</p>
 
 <p><strong>Result Format</strong></p>
 
@@ -2846,24 +2409,17 @@ This endpoint creates a new money transfer.</p>
 <h2 id='confirm-transfer'>Confirm Transfer</h2>
 <p>This endpoint confirms a money transfer. Once you&#39;ve created the transfer and receive a 200 response, you will have 30 seconds to confirm the transfer. Note the <code>transferId</code> after you create the transfer. If you want to automatically confirm the transfer without making an additional API call, set parameter <code>autoConfirm</code> to &quot;true&quot; in your <a href="#create-transfer">Create Transfer</a> request.</p>
 
-<p><strong>Definition</strong>
-<code>POST</code> https://api.testwyre.com/v2/transfer/transferId:/confirm</p>
+<p><strong>Definition</strong></p>
 
-<table><thead>
-<tr>
-<th>Param</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>transferId</td>
-<td>string</td>
-<td>ID of the transfer to confirm</td>
-</tr>
-</tbody></table>
+<p><code>POST</code> https://api.testwyre.com/v2/transfer/transferId:/confirm
+<br>
+<strong>Parameters</strong>
+Param | Type | Description
+--------- | ----------- | -----------
+transferId | string | ID of the transfer to confirm</p>
 
-<p><strong>Result Format</strong></p>
+<p><br>
+<strong>Result Format</strong></p>
 
 <pre class="center-column">
 {
@@ -2917,22 +2473,15 @@ This endpoint creates a new money transfer.</p>
 <h2 id='lookup-transfer'>Lookup Transfer</h2>
 <p>This endpoint allows you to look up information related to a transfer you already created.</p>
 
-<p><strong>Definition</strong>
-<code>GET</code> https://api.testwyre.com/v2/transfer?customId=</p>
+<p><strong>Definition</strong></p>
 
-<table><thead>
-<tr>
-<th>Param</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>customId</td>
-<td>string</td>
-<td>The custom id you provided when creating the transfer</td>
-</tr>
-</tbody></table>
+<p><code>GET</code> https://api.testwyre.com/v2/transfer?customId=
+<br>
+<strong>Parameters</strong>
+Param | Type | Description
+--------- | ----------- | -----------
+customId | string | The custom id you provided when creating the transfer
+<br></p>
 
 <p><strong>Result Format</strong></p>
 
@@ -2986,24 +2535,17 @@ This endpoint creates a new money transfer.</p>
 }
 </pre>
 <h2 id='transfer-status'>Transfer Status</h2>
-<p><strong>Definition</strong>
-<code>GET</code> https://api.testwyre.com/v2/transfer/:transferId</p>
+<p><strong>Definition</strong></p>
 
-<table><thead>
-<tr>
-<th>Param</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>transferId</td>
-<td>string</td>
-<td>Wyre generated transferId</td>
-</tr>
-</tbody></table>
+<p><code>GET</code> https://api.testwyre.com/v2/transfer/:transferId
+<br>
+<strong>Parameters</strong>
+Param | Type | Description
+--------- | ----------- | -----------
+transferId | string | Wyre generated transferId</p>
 
-<p><strong>Result Format</strong></p>
+<p><br>
+<strong>Result Format</strong></p>
 
 <pre class="center-column">
 {
@@ -3055,9 +2597,8 @@ This endpoint creates a new money transfer.</p>
 }
 </pre>
 
-<p><br>
-Once a Transfer enters the PENDING state we will start moving money to the destination account. At some point the Transfer will either move to a COMPLETED status or a FAILED status asynchronously from any API call.</p>
-<h2 id='callbacks-2'>Callbacks</h2>
+<p>Once a Transfer enters the ==PENDING== state we will start moving money to the destination account. At some point the Transfer will either move to a ==COMPLETED== status or a ==FAILED== status asynchronously from any API call.</p>
+<h2 id='callbacks'>Callbacks</h2>
 <p>We provide a series of HTTP callbacks that allow you to notify users when funds have been deposited and when they become available.</p>
 
 <p><strong>When callbacks are sent</strong>
@@ -3072,9 +2613,9 @@ Callbacks are sent whenever a transactional event occurs that will affect the ac
 <p>You may receive two callbacks for a single transaction. This is especially true for transactions on the blockchain. In these cases, you would receive one callback when the transaction is first observed and one callback once the transaction is confirmed.</p>
 
 <p><strong>Callback Acceptance and Retries</strong>
-Your system should respond to the callback request with a 200 response. We only attempt to send the request once, but we may introduce automatic retries in the future. We can manually resend callbacks upon request.</p>
-
-<p><strong>Result Format</strong></p>
+Your system should respond to the callback request with a 200 response. We only attempt to send the request once, but we may introduce automatic retries in the future. We can manually resend callbacks upon request.
+<br>
+<strong>Result Format</strong></p>
 
 <pre class="center-column">
 {
@@ -3126,8 +2667,7 @@ Your system should respond to the callback request with a 200 response. We only 
 }
 </pre>
 
-<p><br>
-The callback payload will be a JSON representation of the transaction that has caused the callback to trigger.</p>
+<p>The callback payload will be a JSON representation of the transaction that has caused the callback to trigger.</p>
 <h1 id='payment-methods'>Payment Methods</h1><h2 id='create-payment-method'>Create Payment Method</h2><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"paymentMethodType"</span><span class="p">:</span><span class="s2">"INTERNATIONAL_TRANSFER"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
@@ -3183,9 +2723,9 @@ It allows us to know where to expect the payment to be coming from.</p>
 <p>This endpoint looks up the bank details associated with a payment method you created.</p>
 
 <p><strong>Definition</strong>
-<code>GET</code> https://api.testwyre.com/v2/paymentMethod/:paymentMethodId</p>
-
-<p><strong>Result Format</strong></p>
+<code>GET</code> https://api.testwyre.com/v2/paymentMethod/:paymentMethodId
+<br>
+<strong>Result Format</strong></p>
 
 <pre class="center-column">
 {
@@ -3233,7 +2773,7 @@ It allows us to know where to expect the payment to be coming from.</p>
 <h2 id='usd-payouts'>USD Payouts</h2>
 <p>USD payouts are initiated from one of our banks that corresponds to the country delivered. Please note that the minimum amount to transfer USD is $5.00.</p>
 
-<p><strong>Definition</strong>&lt;
+<p><strong>Definition</strong>
 <code>POST</code> https://api.testwyre.com/v2/transfers</p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"dest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -3345,6 +2885,8 @@ It allows us to know where to expect the payment to be coming from.</p>
 <td>Currency to be debited from your account</td>
 </tr>
 </tbody></table>
+
+<hr>
 
 <p><strong>Delivery Times</strong>
 Bank cut-off time is 4PM CT
