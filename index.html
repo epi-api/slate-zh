@@ -402,40 +402,54 @@
 <h1 id='053c86ca0d'>开始之前</h1>
 <p>此api标准执行手册乃针对在美国亚马逊平台使用虚拟银行服务进行收款的api产品。按照指引，开发者在通过必要的KYC信息收集后，可以通过api执行创建虚拟银行账户，接收银行账号信息，监测入账，申请提现到国内银行账户等操作。在开始之前，请确保您已就此项业务合作与epiapi公司签署纸质协议，如若未签署协议或有其他问题，请通过 <a href="mailto:contact@epiapi.com">contact@epiapi.com</a>联系我们。</p>
 
+<p>Check the <a href="http://docs.epiapi.com/">English Version</a>.</p>
+
 <p><strong>开始</strong></p>
 
-<p><strong>1.阅读此文档</strong>
-如果看到这里，恭喜您已经完成第一步，（记得看完）。</p>
+<p><strong>1.阅读此文档</strong></p>
 
-<p><strong>2.注册测试用账户</strong>
-点击<a href="https://www.testwyre.com">这里</a>注册一个在测试环境下的账户。测试环境下无需上传任何文件。</p>
+<p>如果看到这里，恭喜您已经完成第一步，（记得看完）。</p>
 
-<p><strong>3.验证你的账户</strong>
-通过<a href="mailto:support@epiapi.com">support@epiapi.com</a>联系我们，我们可以为您验证测试账户并添加测试用款项。</p>
+<p><strong>2.注册测试用账户</strong></p>
 
-<p><strong>4.寻求帮助</strong>
-在账户验证通过后，我们将发送给您 Slack或其他聊天工具(如钉钉、QQ）的加入邀请链接，方便您随时联系我们。</p>
+<p>点击<a href="https://www.testwyre.com">这里</a>注册一个在测试环境下的账户。测试环境下无需上传任何文件。</p>
 
-<p><strong>5.注册生产环境账户</strong>
-在所有测试通过后，您可以点击<a href="https://www.sendwyre.com">这里</a>创建一个真实账户。生产环境下，您必须填写真实信息并上传需要的文件才能通过账户验证。</p>
+<p><strong>3.验证你的账户</strong></p>
 
-<p><strong>6.上线！</strong>
-完成所有步骤，可以上线啦！</p>
+<p>通过<a href="mailto:support@epiapi.com">support@epiapi.com</a>联系我们，我们可以为您验证测试账户并添加测试用款项。</p>
+
+<p><strong>4.寻求帮助</strong></p>
+
+<p>在账户验证通过后，我们将发送给您Slack或其他聊天工具(如钉钉、QQ）的加入邀请链接，方便您随时联系我们。</p>
+
+<p><strong>5.注册生产环境账户</strong></p>
+
+<p>在所有测试通过后，您可以点击<a href="https://www.sendwyre.com">这里</a>创建一个真实账户。生产环境下，您必须填写真实信息并上传需要的文件才能通过账户验证。</p>
+
+<p><strong>6.上线！</strong></p>
+
+<p>完成所有步骤，可以上线啦！</p>
 <h1 id='153042ed9e-2'>概述</h1><h2 id='bc79441a2e'>支持国家（持续更新）</h2>
 <p>我们的虚拟银行服务目前支持通过ACH接收美元到美国银行账户。</p>
 
-<p><strong>国家</strong>
--美国
--欧洲（即将上线）
--澳大利亚（即将上线）</p>
+<p><strong>国家</strong></p>
 
-<p>epiapi一直积极在全球开展业务，如有更新，我们将以邮件形式通知您。</p>
+<ul>
+<li>美国</li>
+<li>欧洲（即将上线）</li>
+<li>澳大利亚（即将上线）</li>
+</ul>
 
-<p><strong>货币</strong>
--美元USD
--欧元EUR（即将上线）
--英镑GBP（即将上线）
--澳元AUD（即将上线）</p>
+<p>epiapi一直积极地在全球开展业务，如有更新，我们将以邮件形式通知您。</p>
+
+<p><strong>货币</strong></p>
+
+<ul>
+<li>美元USD</li>
+<li>欧元EUR（即将上线）</li>
+<li>英镑GBP（即将上线）</li>
+<li>澳元AUD（即将上线）</li>
+</ul>
 <h2 id='4d150364fe'>请求方法</h2>
 <p>我们提供REST风格的api，以JSON响应。</p>
 
@@ -961,7 +975,7 @@
 </tr>
 </tbody></table>
 
-<p>除此以外，您应在发送请求时将包含<code>GET</code>参数的时间戳放在Url之后，UNIX毫秒单位。我们会通过时间戳来避免重复请求攻击。</p>
+<p>除此以外，您应在发送请求时将包含<code>GET</code>参数的时间戳放在Url之后，<strong>UNIX毫秒单位</strong>。我们会通过时间戳来避免重复请求攻击。</p>
 <h2 id='1028ed81a3'>计算签名</h2>
 <p>如果发送<code>GET</code>请求，请将此Url计算入签名：<em>https://api.testwyre.com/v2/rates?timestamp=1426252182534</em></p>
 
@@ -969,14 +983,13 @@
 
 <p>请留意发送<code>POST</code>请求时，必须将请求体（request body）加在URL字符串之后。请求体必须按原样发送，不得修改。服务器会据此计算其内容。</p>
 
-<p>++计算签名步骤：++</p>
+<p><strong>计算签名步骤：</strong></p>
 
 <p>1.request URL 加 HTTP 请求体，串联生成 UTF-8 编码字符串。<code>GET</code>的请求体则创建空白字符串。</p>
 
 <p>2.使用HMAC-SHA256协议，以及您的API密钥计算签名。</p>
 <h2 id='f43db85ea6'>资源名称</h2>
-<p>SRN 是我们平台约定的，调用库内各项数据时使用的资源名称。许多我们的API交互和数据库框架都需要用到 SRN，它大大增加了集成开发的灵活性，也为后续隔离开发其他服务提供便利。所有资源名称皆遵照如下格式：
-<Br></p>
+<p>SRN是我们平台约定的，调用库内各项数据时使用的资源名称。许多我们的API交互和数据库框架都需要用到SRN，它大大增加了集成开发的灵活性，也为后续隔离开发其他服务提供便利。所有资源名称皆遵照如下格式：</p>
 
 <table><thead>
 <tr>
@@ -1018,8 +1031,7 @@
 <h2 id='128e9ff023'>错误处理</h2>
 <p>请求成功后，返回值为HTTP 200，请求体具体格式取决于终端节点。</p>
 
-<p>如果出现错误，返回值为==4XX==或==5XX==的状态码，具体描述参见下表：
-<br></p>
+<p>如果出现错误，返回值为4XX或5XX的状态码，具体描述参见下表：</p>
 
 <table><thead>
 <tr>
@@ -1082,18 +1094,27 @@
 
 <p>所有错误描述都会附带子类型参数来解释该错误的详细信息。除此之外，一些验证失败返回值会带有两个字段，问题字段和问题值，详细指出错误位置。</p>
 
-<p>++一些常见的验证失败子类：++</p>
+<p><strong>一些常见的验证失败子类：</strong></p>
 
-<p>FIELD_REQUIRED  需填写域
-INVALID_VALUE   无效值
-TRANSACTION_AMOUNT_TOO_SMALL  交易值过小
-UNSUPPORTED_SOURCE_CURRENCY   非支持货币种类
-CANNOT_SEND_SELF_FUNDS        自账户不能转账
-INVALID_PAYMENT_METHOD        收款方无效
-PAYMENT_METHOD_INACTIVE       收款方未激活
-PAYMENT_METHOD_UNSUPPORTED_CHARGE_CURRENCY    不支持该币种转账
-PAYMENT_METHOD_UNCHARGEABLE                   不支持此付款方式充值
-PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY   不支持该币种充值</p>
+<p>FIELD_REQUIRED  字段未填写</p>
+
+<p>INVALID_VALUE   无效值</p>
+
+<p>TRANSACTION_AMOUNT_TOO_SMALL  交易值过小</p>
+
+<p>UNSUPPORTED_SOURCE_CURRENCY   非支持货币种类</p>
+
+<p>CANNOT_SEND_SELF_FUNDS        自账户不能转账</p>
+
+<p>INVALID_PAYMENT_METHOD        收款方无效</p>
+
+<p>PAYMENT_METHOD_INACTIVE       收款方未激活</p>
+
+<p>PAYMENT_METHOD_UNSUPPORTED_CHARGE_CURRENCY    不支持该币种转账</p>
+
+<p>PAYMENT_METHOD_UNCHARGEABLE                   不支持此付款方式充值</p>
+
+<p>PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY   不支持该币种充值</p>
 <h1 id='1d33fae982'>操作指南</h1>
 <p>以下指南将为您详细解读通过api交互创建美元收款产品的全部步骤。</p>
 <h2 id='a573be9f55'>虚拟银行</h2>
@@ -1156,47 +1177,171 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY   不支持该币种充值</p>
 </pre>
 
 <p><br>
-字段(* 代表必填)| 描述
----------|-----------
-&quot;entityType&quot; * | &quot;CORP&quot;、“M”、“F” available
-&quot;entityScope&quot; * | &quot;Shopping/Retail&quot;
-&quot;email&quot; * | &quot;test+merchant@epiapi.com&quot;
-&quot;phoneNumber&quot; * | &quot;13111111111&quot;
-&quot;ip&quot; * | The IP address of the user when opening the acount
-&quot;nameCn&quot; * | &quot;法人姓名&quot;
-&quot;nameEn&quot; * | &quot;Legal Rep&quot;
-&quot;dateOfBirth&quot; * | UNIX (milliseconds)
-&quot;address&quot; * | (street 2 can be bland if not needed)
-&quot;street1&quot; | &quot;东四北大街107号&quot;
-&quot;street2&quot; | &quot;克林大厦107室&quot;
-&quot;city&quot; | &quot;beijing&quot;
-&quot;state&quot; | &quot;beijing&quot;
-&quot;country&quot; |&quot;CN&quot;
-&quot;postalCode&quot; | &quot;100007&quot;
-&quot;idNumber&quot; * | &quot;432524199902287897&quot;
-&quot;idDoc&quot; * | null
-&quot;merchantId&quot; | &quot;A00000&quot;
-&quot;merchantType&quot; | &quot;Amazon&quot;
-&quot;expectedMonthlySales&quot; | 40000
-&quot;shopName&quot; | &quot;MyBrand&quot;
-&quot;website&quot; | &quot;https://merchant.website.com&quot;
-&quot;repAaddress&quot;(* CORP only) | (street 2 can be bland if not needed)
-&quot;street1&quot;| &quot;东四北大街107号&quot;
-&quot;street2&quot;| &quot;克林大厦107室&quot;
-&quot;city&quot;| &quot;beijing&quot;
-&quot;state&quot; | &quot;beijing&quot;
-&quot;country&quot;| &quot;CN&quot;
-&quot;postalCode&quot; | &quot;100007&quot;
-&quot;companyNameCn&quot;(* CORP only)| &quot;ABC有限责任公司&quot;
-&quot;companyNameEn&quot;( * CORP only)| &quot;ABC Company Limited&quot;
-&quot;registrationNumber&quot;(* CORP only)| &quot;123456789&quot;
-&quot;coiDoc&quot;(* CORP only)| null
-&quot;salesDoc&quot;(may be required for high volume clients) | null
-&quot;dateOfEstablishment&quot; * | UNIX (milliseconds)
-&quot;beneficialOwners&quot;(HK CORP only) |
-&quot;fullName&quot;| &quot;Richard&quot;
-&quot;idNumber&quot;| &quot;1231321312&quot;
-&quot;idDoc&quot;| null</p>
+<strong>KYC 资料</strong></p>
+
+<table><thead>
+<tr>
+<th>字段(* 代表必填)</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>&quot;entityType&quot; *</td>
+<td>可填&quot;CORP&quot;、“M”、“F”</td>
+</tr>
+<tr>
+<td>&quot;entityScope&quot; *</td>
+<td>&quot;Shopping/Retail&quot;</td>
+</tr>
+<tr>
+<td>&quot;email&quot; *</td>
+<td>&quot;test+merchant@epiapi.com&quot;</td>
+</tr>
+<tr>
+<td>&quot;phoneNumber&quot; *</td>
+<td>&quot;13111111111&quot;</td>
+</tr>
+<tr>
+<td>&quot;ip&quot; *</td>
+<td>“登陆店铺常用IP地址”</td>
+</tr>
+<tr>
+<td>&quot;nameCn&quot; *</td>
+<td>&quot;法人姓名&quot;</td>
+</tr>
+<tr>
+<td>&quot;nameEn&quot; *</td>
+<td>&quot;Legal Rep&quot; 拼音，全大写</td>
+</tr>
+<tr>
+<td>&quot;dateOfBirth&quot; *</td>
+<td>UNIX毫秒单位</td>
+</tr>
+<tr>
+<td>&quot;address&quot; *</td>
+<td>(street 2 可以不填)</td>
+</tr>
+<tr>
+<td>&quot;street1&quot;</td>
+<td>&quot;东四北大街107号&quot;</td>
+</tr>
+<tr>
+<td>&quot;street2&quot;</td>
+<td>&quot;克林大厦107室&quot;</td>
+</tr>
+<tr>
+<td>&quot;city&quot;</td>
+<td>&quot;beijing&quot;</td>
+</tr>
+<tr>
+<td>&quot;state&quot;</td>
+<td>&quot;beijing&quot;</td>
+</tr>
+<tr>
+<td>&quot;country&quot;</td>
+<td>&quot;CN&quot;</td>
+</tr>
+<tr>
+<td>&quot;postalCode&quot;</td>
+<td>&quot;100007&quot;</td>
+</tr>
+<tr>
+<td>&quot;idNumber&quot; *</td>
+<td>&quot;432524199902287897&quot;</td>
+</tr>
+<tr>
+<td>&quot;idDoc&quot; *</td>
+<td>null</td>
+</tr>
+<tr>
+<td>&quot;merchantId&quot;</td>
+<td>&quot;A00000&quot;</td>
+</tr>
+<tr>
+<td>&quot;merchantType&quot;</td>
+<td>&quot;Amazon&quot;</td>
+</tr>
+<tr>
+<td>&quot;expectedMonthlySales&quot;</td>
+<td>40000</td>
+</tr>
+<tr>
+<td>&quot;shopName&quot;</td>
+<td>&quot;MyBrand&quot;</td>
+</tr>
+<tr>
+<td>&quot;website&quot;</td>
+<td>&quot;https://merchant.website.com&quot;</td>
+</tr>
+<tr>
+<td>&quot;repAaddress&quot;(* 限企业)</td>
+<td>(street 2 可以不填)</td>
+</tr>
+<tr>
+<td>&quot;street1&quot;</td>
+<td>&quot;东四北大街107号&quot;</td>
+</tr>
+<tr>
+<td>&quot;street2&quot;</td>
+<td>&quot;克林大厦107室&quot;</td>
+</tr>
+<tr>
+<td>&quot;city&quot;</td>
+<td>&quot;beijing&quot;</td>
+</tr>
+<tr>
+<td>&quot;state&quot;</td>
+<td>&quot;beijing&quot;</td>
+</tr>
+<tr>
+<td>&quot;country&quot;</td>
+<td>&quot;CN&quot;</td>
+</tr>
+<tr>
+<td>&quot;postalCode&quot;</td>
+<td>&quot;100007&quot;</td>
+</tr>
+<tr>
+<td>&quot;companyNameCn&quot;(* 限企业)</td>
+<td>&quot;ABC有限责任公司&quot;</td>
+</tr>
+<tr>
+<td>&quot;companyNameEn&quot;( * 限企业)</td>
+<td>&quot;ABC Company Limited&quot;</td>
+</tr>
+<tr>
+<td>&quot;registrationNumber&quot;(* 限企业)</td>
+<td>&quot;123456789&quot;</td>
+</tr>
+<tr>
+<td>&quot;coiDoc&quot;(* 限企业)</td>
+<td>null</td>
+</tr>
+<tr>
+<td>&quot;salesDoc&quot;(流水额高的商户可能需要提供)</td>
+<td>null</td>
+</tr>
+<tr>
+<td>&quot;dateOfEstablishment&quot; *</td>
+<td>UNIX毫秒单位</td>
+</tr>
+<tr>
+<td>&quot;beneficialOwners&quot;(仅限香港注册企业)</td>
+<td></td>
+</tr>
+<tr>
+<td>&quot;fullName&quot;</td>
+<td>&quot;Richard&quot;</td>
+</tr>
+<tr>
+<td>&quot;idNumber&quot;</td>
+<td>&quot;1231321312&quot;</td>
+</tr>
+<tr>
+<td>&quot;idDoc&quot;</td>
+<td>null</td>
+</tr>
+</tbody></table>
 <pre class="highlight plaintext"><code>curl -v -XPOST 'https://api.testwyre.com/v2/wallets' \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: {api-key}" \
@@ -1250,8 +1395,9 @@ PAYMENT_METHOD_UNSUPPORTED_DEPOSIT_CURRENCY   不支持该币种充值</p>
 </span></code></pre>
 <p>平台用户申请使用VBA服务时，为这个用户<a href="#创建子钱包">创建钱包</a>。</p>
 
-<p>注：
-1.根据相关法规要求，为了给用户开通虚拟银行服务，您需要从用户处收集必要的KYC信息并将其通过终端节点传送给我们。钱包会立即开通，相关的银行信息将在之后该账户被银行批准时提供。（步骤3）</p>
+<p>注：</p>
+
+<p>1.根据相关法规要求，为了给用户开通虚拟银行服务，您需要从用户处收集必要的KYC信息并将其通过终端节点传送给我们。钱包会立即开通，相关的银行信息将在之后该账户被银行批准时提供。（步骤3）</p>
 
 <p>2.每个子钱包将在创建时自动生成一个子钱包id。</p>
 
@@ -1270,7 +1416,7 @@ filename |文件名，（可填）: &quot;coiDoc.pdf&quot;</p>
 
 <p>示例 <code>POST</code> https://api.testwyre.com/v2/documents?ownerSrn=wallet:WA-123123123&amp;filename=coiDoc.pdf</p>
 
-<p>==在请求体中包含原始字节文件上传。==</p>
+<p>在请求体中包含原始字节文件上传。</p>
 <pre class="highlight java tab-java"><code><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">computeSignature2</span><span class="o">(</span><span class="n">String</span> <span class="n">secretKey</span><span class="o">,</span><span class="n">String</span> <span class="n">url</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">reqData</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">UnsupportedEncodingException</span> <span class="o">{</span>
 
        <span class="kt">byte</span><span class="o">[]</span> <span class="n">urlBytes</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span>
@@ -1299,20 +1445,36 @@ filename |文件名，（可填）: &quot;coiDoc.pdf&quot;</p>
        <span class="o">}</span>
    <span class="o">}</span>
 </code></pre>
-<p><br>
-最后，请求头中应反映文件类型，允许上传的文件类型有：
-<br>
-文件类型 |
---------- |
-&quot;application/msword&quot; |
-&quot;application/vnd.openxmlformats-officedocument.wordprocessingml.document&quot; |
-&quot;application/pdf&quot; |
-&quot;image/jpg&quot; |
-&quot;image/jpeg&quot; |
-&quot;image/png&quot; |
-<br>
-文件上传成功后，返回将接收到名为&quot;document&quot;的对象。将每一项的文件id( 如DO-123123123 )记录下来，填入创建钱包请求体的相关字段中。
-<br></p>
+<p>最后，请求头中应反映文件类型，允许上传的文件类型有：</p>
+
+<table><thead>
+<tr>
+<th>文件类型</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>&quot;application/msword&quot;</td>
+</tr>
+<tr>
+<td>&quot;application/vnd.openxmlformats-officedocument.wordprocessingml.document&quot;</td>
+</tr>
+<tr>
+<td>&quot;application/pdf&quot;</td>
+</tr>
+<tr>
+<td>&quot;image/jpg&quot;</td>
+</tr>
+<tr>
+<td>&quot;image/jpeg&quot;</td>
+</tr>
+<tr>
+<td>&quot;image/png&quot;</td>
+</tr>
+</tbody></table>
+
+<p><br></p>
+
+<p>文件上传成功后，返回将接收到名为&quot;document&quot;的对象。将每一项的文件id( 如DO-123123123 )记录下来，填入创建钱包请求体的相关字段中。</p>
 
 <table><thead>
 <tr>
@@ -1347,6 +1509,8 @@ filename |文件名，（可填）: &quot;coiDoc.pdf&quot;</p>
   }
 }
 </pre>
+
+<p><br></p>
 <h3 id='4'>4. 查询银行信息</h3>
 <p>银行信息将作为<code>object</code>添加到子钱包里的<code>vbaData</code>字段下。</p>
 
@@ -1361,7 +1525,8 @@ filename |文件名，（可填）: &quot;coiDoc.pdf&quot;</p>
   }
 </pre>
 
-<p>使用 <code>GET</code> https://api.testwyre.com/v2/wallet/[walletID] 查询子钱包的银行信息。将查询请求发送次数限制为每小时1次，查询到信息后即停止查询请求。稍后我们将为此类场景单独创建一个回调。</p>
+<p><br>
+使用 <code>GET</code> https://api.testwyre.com/v2/wallet/[walletID] 查询子钱包的银行信息。将查询请求发送次数限制为每小时1次，查询到信息后即停止查询请求。稍后我们将为此类场景单独创建一个回调。</p>
 
 <p>一旦收到信息后，您可以将银行信息发给用户，让用户在自己的店铺后台进行收款信息更新。</p>
 <h3 id='5'>5.接收款项与回调</h3>
@@ -1374,34 +1539,38 @@ filename |文件名，（可填）: &quot;coiDoc.pdf&quot;</p>
 
 <p>外部入账如亚马逊款项入账的情况，则会创建交易id (如 TR-123123123) 来供查询，查看: <em>https://api.testwyre.com/v2//transaction/[id]</em></p>
 
-<p><strong>Result Format</strong>
+<p><br>
+<strong>Result Format</strong></p>
+
 <pre class="center-column">
 {
-  &quot;createdAt&quot;:1531445525097,
-  &quot;id&quot;:&quot;TR-F3947W8C2C6&quot;,
-  &quot;source&quot;:&quot;transfer:TF-HP4A42EC6DX&quot;,
-  &quot;dest&quot;:&quot;wallet:WA-CF9RFZ7QU6W&quot;,
-  &quot;currency&quot;:&quot;USD&quot;,
-  &quot;amount&quot;:5005.00,
-  &quot;status&quot;:&quot;CONFIRMED&quot;,
-  &quot;confirmedAt&quot;:1531445525097,
-  &quot;cancelledAt&quot;:null,
-  &quot;reversedAt&quot;:null,
-  &quot;message&quot;:&quot;Deposit for transfer TF-HP4A42EC6DX&quot;,
-  &quot;allowOverdraft&quot;:true,
-  &quot;authorizer&quot;:&quot;account:AC-XXXXXXXXX&quot;,
-  &quot;senderProvidedId&quot;:null,
-  &quot;reversedBy&quot;:null,
-  &quot;fees&quot;:0,
-  &quot;feesDest&quot;:null,
-  &quot;metadata&quot;:{
-    &quot;Description&quot;:&quot;Pending: Transfer of $5005.00 to wallet:WA-CF9RFZ7QU6W&quot;,
-    &quot;transferId&quot;:&quot;TF-HP4A42EC6DX&quot;},
-    &quot;tags&quot;:[],
-    &quot;sourceFees&quot;:null,
-    &quot;destFees&quot;:null
+  "createdAt":1531445525097,
+  "id":"TR-F3947W8C2C6",
+  "source":"transfer:TF-HP4A42EC6DX",
+  "dest":"wallet:WA-CF9RFZ7QU6W",
+  "currency":"USD",
+  "amount":5005.00,
+  "status":"CONFIRMED",
+  "confirmedAt":1531445525097,
+  "cancelledAt":null,
+  "reversedAt":null,
+  "message":"Deposit for transfer TF-HP4A42EC6DX",
+  "allowOverdraft":true,
+  "authorizer":"account:AC-XXXXXXXXX",
+  "senderProvidedId":null,
+  "reversedBy":null,
+  "fees":0,
+  "feesDest":null,
+  "metadata":{
+    "Description":"Pending: Transfer of $5005.00 to wallet:WA-CF9RFZ7QU6W",
+    "transferId":"TF-HP4A42EC6DX"},
+    "tags":[],
+    "sourceFees":null,
+    "destFees":null
   }
-</pre></p>
+</pre>
+
+<p><br></p>
 <h3 id='6'>6. 将美元从子钱包转至母账户</h3>
 <p><code>POST</code> https://api.testwyre.com/v2/transfers</p>
 
@@ -1417,8 +1586,9 @@ filename |文件名，（可填）: &quot;coiDoc.pdf&quot;</p>
 }
 </pre>
 
-<p>点击<a href="https://www.testwyre.com/settings/basic-info">这里</a>查询母账户id。
-然后将美元款项转账至事先准备好的结算账户（注：账户创建时，epiapi默认将结算账户创建为<code>paymentMethod</code>）。</p>
+<p>点击<a href="https://www.testwyre.com/settings/basic-info">这里</a>查询母账户id。</p>
+
+<p>然后将美元款项转账至事先准备好的结算账户（注：账户创建时，epiapi默认将结算账户创建为<code>paymentMethod</code>）。</p>
 
 <pre class="center-column">
 {
@@ -1439,28 +1609,72 @@ filename |文件名，（可填）: &quot;coiDoc.pdf&quot;</p>
 
 <p><strong>定义</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/account
-<br></p>
+<p><code>GET</code> https://api.testwyre.com/v2/account</p>
 
-<p>查询<code>availableBalance(可用余额)</code>来获取账户余额信息，此项将返回按照目的币种汇率换算后可转账金额。
-<br>
-字段 | 描述
---------- | -----------
-ID | 账户内部识别号
-createdAt | 账户创建时间
-updatedAt | 账户最后更新时间
-loginAt | 账户最后登录时间
-rank | 账户排名，主要用于识别账户权限，例如购买外汇上限
-profile | 账户信息，一组用户有权限更改的字段
-paymentMethods | 账户收款方式
-identities |  一组关联账户个人身份信息的数组，如电话邮箱等，此处包含的信息需与账户创建验证时一致
-depositAddresses | 账户下储存货币地址
-totalBalances | 账户下所有余额，包括处理中和可用余额
-availableBalances | 账户下目前可用余额，如果需要查询账户内有多少余额可供提现操作，请查询此项
-email | 绑定的邮箱
-cellphone | 绑定的手机号</p>
+<p>查询<code>availableBalance(可用余额)</code>来获取账户余额信息，此项将返回按照目的币种汇率换算后可转账金额。</p>
 
-<p><strong>Result Format</strong></p>
+<table><thead>
+<tr>
+<th>字段</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>账户内部识别号</td>
+</tr>
+<tr>
+<td>createdAt</td>
+<td>账户创建时间</td>
+</tr>
+<tr>
+<td>updatedAt</td>
+<td>账户最后更新时间</td>
+</tr>
+<tr>
+<td>loginAt</td>
+<td>账户最后登录时间</td>
+</tr>
+<tr>
+<td>rank</td>
+<td>账户排名，主要用于识别账户权限，例如购买外汇上限</td>
+</tr>
+<tr>
+<td>profile</td>
+<td>账户信息，一组用户有权限更改的字段</td>
+</tr>
+<tr>
+<td>paymentMethods</td>
+<td>账户收款方式</td>
+</tr>
+<tr>
+<td>identities</td>
+<td>一组关联账户个人身份信息的数组，如电话邮箱等，此处包含的信息需与账户创建验证时一致</td>
+</tr>
+<tr>
+<td>depositAddresses</td>
+<td>账户下储存货币地址</td>
+</tr>
+<tr>
+<td>totalBalances</td>
+<td>账户下所有余额，包括处理中和可用余额</td>
+</tr>
+<tr>
+<td>availableBalances</td>
+<td>账户下目前可用余额，如果需要查询账户内有多少余额可供提现操作，请查询此项</td>
+</tr>
+<tr>
+<td>email</td>
+<td>绑定的邮箱</td>
+</tr>
+<tr>
+<td>cellphone</td>
+<td>绑定的手机号</td>
+</tr>
+</tbody></table>
+
+<p><br>
+<strong>Result Format</strong></p>
 
 <pre class="center-column">
 {
@@ -1516,7 +1730,9 @@ cellphone | 绑定的手机号</p>
 }
 </pre>
 <h1 id='88f0e7b5b9'>子钱包</h1>
-<p>如果需要管理账户下多种货币，请使用Wallet API。如果您向您的账户发送了比特币或以太坊，这些货币将自动被储存在单独的比特币或以太坊钱包地址下。</p>
+<p>epiapi使用子钱包来指代每个商户的独立收款账户。在使用VBA进行跨境收款时，所有子钱包创建类型均为<code>type=VBA</code>。以下图表显示了一组典型的收款流程。</p>
+
+<p><img src="images/Flow-Zh.png" alt="Flow-Zh.png" /></p>
 <h2 id='5aea6fa68a'>创建子钱包</h2><pre class="highlight plaintext"><code>curl -v -XPOST 'https://api.testwyre.com/v2/wallets' \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: {api-key}" \
@@ -1834,9 +2050,9 @@ cellphone | 绑定的手机号</p>
 </code></pre>
 <p><strong>定义</strong></p>
 
-<p><code>POST</code> https://api.testwyre.com/v2/wallets
-<br>
-<strong>参数</strong></p>
+<p><code>POST</code> https://api.testwyre.com/v2/wallets</p>
+
+<p><strong>参数</strong></p>
 
 <table><thead>
 <tr>
@@ -1896,6 +2112,8 @@ cellphone | 绑定的手机号</p>
   "notes" : "Notes about the user"
 }
 </pre>
+
+<p><br></p>
 <h2 id='ca23b97e7e'>创建多个子钱包</h2><pre class="highlight plaintext"><code>
 curl -XPOST 'https://api.testwyre.com/v2/wallets/batch?pretty' \
 -H 'Content-Type:application/json' \
@@ -1911,8 +2129,7 @@ curl -XPOST 'https://api.testwyre.com/v2/wallets/batch?pretty' \
 
 <p><strong>定义</strong></p>
 
-<p><code>POST</code> https://api.testwyre.com/v2/wallets/batch
-<br></p>
+<p><code>POST</code> https://api.testwyre.com/v2/wallets/batch</p>
 
 <p><strong>参数</strong></p>
 
@@ -1997,12 +2214,12 @@ curl -XPOST 'https://api.testwyre.com/v2/wallets/batch?pretty' \
 }
 </pre>
 <h2 id='0b81bd026f'>查询子钱包</h2>
-<p>通过user ID查询子钱包：</p>
+<p><strong>通过user ID查询子钱包：</strong></p>
 <pre class="highlight plaintext"><code>curl -v -XGET 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
   -H "X-Api-Key: {api-key}" \
   -H "X-Api-Signature: {signature}" \
 </code></pre>
-<p>通过用户名查询子钱包：</p>
+<p><strong>通过用户名查询子钱包：</strong></p>
 <pre class="highlight plaintext"><code>curl -v -XGET 'https://api.testwyre.com/v2/wallet' \
   -H "X-Api-Key: {api-key}" \
   -H "X-Api-Signature: {signature}" \
@@ -2012,23 +2229,50 @@ curl -XPOST 'https://api.testwyre.com/v2/wallets/batch?pretty' \
 
 <p><strong>定义</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/wallet/{walletId}
-<br></p>
+<p><code>GET</code> https://api.testwyre.com/v2/wallet/{walletId}</p>
 
-<p><strong>参数</strong>
-参数 | 类型 | 描述 | 是否需要
---------- | ----------- | ----------- | -----------
-walletId | string | 子钱包所属用户id | yes
-<br>
+<p><strong>参数</strong></p>
+
+<table><thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
+<th>是否需要</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>walletId</td>
+<td>string</td>
+<td>子钱包所属用户id</td>
+<td>yes</td>
+</tr>
+</tbody></table>
+
+<p><br>
 <strong>定义</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/wallet/
-<br>
-<strong>参数</strong>
-参数 | 类型| 描述| 是否需要
---------- | ----------- | ----------- | -----------
-name | string | 子钱包所属用户名 | yes
-<br>
+<p><code>GET</code> https://api.testwyre.com/v2/wallet/</p>
+
+<p><strong>参数</strong></p>
+
+<table><thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
+<th>是否需要</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>子钱包所属用户名</td>
+<td>yes</td>
+</tr>
+</tbody></table>
+
+<p><br>
 <strong>Results Format</strong></p>
 
 <pre class="center-column">
@@ -2055,6 +2299,8 @@ name | string | 子钱包所属用户名 | yes
    "id": "[Wallet-ID]"
 }
 </pre>
+
+<p><br></p>
 <h2 id='2436cc0e95'>编辑钱包</h2><pre class="highlight plaintext"><code>curl -v -XPOST 'https://api.testwyre.com/v2/wallet/{wallet-id}/update' \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: {api-key}" \
@@ -2256,8 +2502,7 @@ name | string | 子钱包所属用户名 | yes
 
 <p><strong>定义</strong></p>
 
-<p><code>POST</code> https://api.testwyre.com/v2/wallet/{walletId}
-<br></p>
+<p><code>POST</code> https://api.testwyre.com/v2/wallet/{walletId}</p>
 <h2 id='f3cd4d2aa7'>删除钱包</h2><pre class="highlight plaintext"><code>
 curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
   -H "X-Api-Key: {api-key}" \
@@ -2267,8 +2512,7 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 
 <p><strong>定义</strong></p>
 
-<p><code>DELETE</code> https://api.testwyre.com/v2/wallet/{walletId}
-<br></p>
+<p><code>DELETE</code> https://api.testwyre.com/v2/wallet/{walletId}</p>
 
 <p><strong>参数</strong></p>
 
@@ -2292,8 +2536,7 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 
 <p><strong>定义</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/wallets
-<br></p>
+<p><code>GET</code> https://api.testwyre.com/v2/wallets</p>
 
 <p><strong>参数</strong></p>
 
@@ -2319,9 +2562,8 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 </tr>
 </tbody></table>
 
-<p><br></p>
-
-<p><strong>Result Format</strong></p>
+<p><br>
+<strong>Result Format</strong></p>
 
 <pre class="center-column">
 {
@@ -2345,7 +2587,7 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 <h1 id='8e9ec9ac7d'>转账</h1><h2 id='45fa4e00db'>介绍</h2>
 <p>转账是Epi API中最重要的操作之一，我们的转账API功能强大，非常灵活，除外部转账，内部的资金移动也同样支持，母账户管理、子钱包间交易等渠道皆可。除此之外，您可指定不同的来源和目的币种，资金将在后台自动完成处理。</p>
 
-<p>任何在平台上的资金移动都被视为交易操作，所以过程中款项将会呈现不同的处理状态，直至操作完成，款项被转入您指定的收入方。<Br></p>
+<p>任何在平台上的资金移动都被视为交易操作，所以过程中款项将会呈现不同的处理状态，直至操作完成，款项被转入您指定的收入方。</p>
 <h2 id='f84e5af910'>创建转账</h2>
 <p><strong>定义</strong></p>
 
@@ -2363,8 +2605,6 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
    "message": ""
 }
 </pre>
-
-<p><br></p>
 
 <p><strong>参数</strong></p>
 
@@ -2456,15 +2696,18 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 </tr>
 </tbody></table>
 
-<p><br>
-转账创建后状态为==UNCONFIRMED（未确认)==有30秒的时间用来检查并<a href="#确认转账">确认请求</a>，过时无效。无效时请重新创建转账请求，然后确认，也可以设置<code>autoConfirm</code>的值为<code>true</code>来自动确认。</p>
+<p><br></p>
+
+<p>转账创建后状态为UNCONFIRMED（未确认)有30秒的时间用来检查并<a href="#确认转账">确认请求</a>，过时无效。无效时请重新创建转账请求，然后确认，也可以设置<code>autoConfirm</code>的值为<code>true</code>来自动确认。</p>
 
 <p>检查一笔转账请求时请注意以下几项：</p>
 
-<p><code>exchangeRate</code> - 转账交易时的汇率，汇率将以来源货币为基准表示，如需转换为目的货币，用汇率乘以来源货币即可，此项包含epiapi扣除的手续费及按需产生的其他费用。
-<code>sourceAmount/destAmount</code> - 转出金额/收入金额，请仔细检查此处的金额是否符合预计转出/收入的款项金额，此处的值取决于<code>amountIncludesFees</code>参数。</p>
+<p><code>exchangeRate</code> - 转账交易时的汇率，汇率将以来源货币为基准表示，如需转换为目的货币，用汇率乘以来源货币即可，此项包含epiapi扣除的手续费及按需产生的其他费用。</p>
 
-<p><strong>Result Format</strong></p>
+<p><code>sourceAmount/destAmount</code> - 转出金额/收入金额，请仔细检查此处的金额是否符合预计转出/收入的款项金额，此处的值取决于<code>amountIncludesFees</code>参数。</p>
+
+<p><br>
+<strong>Result Format</strong></p>
 
 <pre class="center-column">
 {
@@ -2520,9 +2763,9 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 
 <p><strong>定义</strong></p>
 
-<p><code>POST</code> https://api.testwyre.com/v2/transfer/transferId:/confirm
-<br>
-<strong>参数</strong></p>
+<p><code>POST</code> https://api.testwyre.com/v2/transfer/transferId:/confirm</p>
+
+<p><strong>参数</strong></p>
 
 <table><thead>
 <tr>
@@ -2538,9 +2781,8 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 </tr>
 </tbody></table>
 
-<p><br></p>
-
-<p><strong>Result Format</strong></p>
+<p><br>
+<strong>Result Format</strong></p>
 
 <pre class="center-column">
 {
@@ -2596,16 +2838,26 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 
 <p><strong>定义</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/transfer?customId=
-<br>
-<strong>参数</strong>
-参数 | 类型 | 描述
---------- | ----------- | -----------
-customId | string | 创建转账时提供的识别号</p>
+<p><code>GET</code> https://api.testwyre.com/v2/transfer?customId=</p>
 
-<p><br></p>
+<p><strong>参数</strong></p>
 
-<p><strong>Result Format</strong></p>
+<table><thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>customId</td>
+<td>string</td>
+<td>创建转账时提供的识别号</td>
+</tr>
+</tbody></table>
+
+<p><br>
+<strong>Result Format</strong></p>
 
 <pre class="center-column">
 {
@@ -2659,86 +2911,25 @@ customId | string | 创建转账时提供的识别号</p>
 <h2 id='1a3ddc077b'>转账状态</h2>
 <p><strong>定义</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/transfer/:transferId
-<br>
-<strong>参数</strong>
-参数| 类型| 描述
---------- | ----------- | -----------
-transferId | string | 生成的transferId
-<br></p>
+<p><code>GET</code> https://api.testwyre.com/v2/transfer/:transferId</p>
 
-<p><strong>Result Format</strong></p>
+<p><strong>参数</strong></p>
 
-<pre class="center-column">
-{
-    "id": "TF-VWGF3WW6JU4",
-    "status": "COMPLETED",
-    "failureReason": null,
-    "language": "en",
-    "createdAt": 1525196883000,
-    "updatedAt": 1525196883000,
-    "completedAt": 1525196884000,
-    "cancelledAt": null,
-    "expiresAt": 1525456083000,
-    "owner": "account:AC-PJZEFT7JP6J",
-    "source": "service:Fiat Credits",
-    "dest": "wallet:WA-AFFGZJJ7X82",
-    "sourceCurrency": "USD",
-    "sourceAmount": 10,
-    "destCurrency": "USD",
-    "destAmount": 10,
-    "exchangeRate": null,
-    "message": null,
-    "totalFees": 0,
-    "fees": {
-        "USD": 0
-    },
-    "customId": null,
-    "reversingSubStatus": null,
-    "reversalReason": null,
-    "pendingSubStatus": null,
-    "destName": "amandawallet",
-    "sourceName": "Wyre",
-    "blockchainTx": null,
-    "statusHistories": [
-        {
-            "id": "HNUBAMZ4YQQ",
-            "createdAt": 1525196884000,
-            "statusDetail": "Initiating Transfer",
-            "state": "INITIATED",
-            "failedState": null
-        },
-        {
-            "id": "V8L2MJNPF6D",
-            "createdAt": 1525196884000,
-            "statusDetail": "Transfer Completed",
-            "state": "COMPLETED",
-            "failedState": null
-        }
-    ]
-}
-</pre>
+<table><thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>transferId</td>
+<td>string</td>
+<td>生成的transferId</td>
+</tr>
+</tbody></table>
 
-<p>转账显示为==PENDING(处理中)==状态后，我们将开始转移款项至收款方。在此之后该笔转账会根据情况显示为==COMPLETE(完成)==D或==FAILED(失败)==状态。</p>
-<h2 id='c76b97433d'>回调</h2>
-<p>我们提供一系列HTTP回调来方便您通知您的用户存款及转账状态。</p>
-
-<p><strong>回调发出</strong></p>
-
-<p>任何影响账户余额的操作都会导致发出回调，例如：</p>
-
-<ul>
-<li>处理中的入账</li>
-<li>已确认的处理中转账</li>
-<li>进行中的转账</li>
-</ul>
-
-<p>可能会出现一笔转账收到两次回调的情况，尤其是区块链上的相关操作，此时将在交易第一次被监测到和交易确认后分别收到两次回调。</p>
-
-<p><strong>接收回调和重试</strong></p>
-
-<p>您的系统应以HTTP 200响应回调请求，我们仅会尝试发送一次，此处将在稍后更新时转为自动重试。目前我们可以手动重新发送。
-<br>
+<p><br>
 <strong>Result Format</strong></p>
 
 <pre class="center-column">
@@ -2790,6 +2981,83 @@ transferId | string | 生成的transferId
     ]
 }
 </pre>
+
+<p><br></p>
+
+<p>转账显示为PENDING(处理中)状态后，我们将开始转移款项至收款方。在此之后该笔转账会根据情况显示为COMPLETE(完成)或FAILED(失败)状态。</p>
+<h2 id='c76b97433d'>回调</h2>
+<p>我们提供一系列HTTP回调来方便您通知您的用户存款及转账状态。</p>
+
+<p><strong>回调发出</strong></p>
+
+<p>任何影响账户余额的操作都会导致发出回调，例如：</p>
+
+<ul>
+<li>处理中的入账</li>
+<li>已确认的处理中转账</li>
+<li>进行中的转账</li>
+</ul>
+
+<p>可能会出现一笔转账收到两次回调的情况，尤其是区块链上的相关操作，此时将在交易第一次被监测到和交易确认后分别收到两次回调。</p>
+
+<p><strong>接收回调和重试</strong></p>
+
+<p>您的系统应以HTTP 200响应回调请求，我们仅会尝试发送一次，此处将在稍后更新时转为自动重试。目前我们可以手动重新发送。</p>
+
+<p><br>
+<strong>Result Format</strong></p>
+
+<pre class="center-column">
+{
+    "id": "TF-VWGF3WW6JU4",
+    "status": "COMPLETED",
+    "failureReason": null,
+    "language": "en",
+    "createdAt": 1525196883000,
+    "updatedAt": 1525196883000,
+    "completedAt": 1525196884000,
+    "cancelledAt": null,
+    "expiresAt": 1525456083000,
+    "owner": "account:AC-PJZEFT7JP6J",
+    "source": "service:Fiat Credits",
+    "dest": "wallet:WA-AFFGZJJ7X82",
+    "sourceCurrency": "USD",
+    "sourceAmount": 10,
+    "destCurrency": "USD",
+    "destAmount": 10,
+    "exchangeRate": null,
+    "message": null,
+    "totalFees": 0,
+    "fees": {
+        "USD": 0
+    },
+    "customId": null,
+    "reversingSubStatus": null,
+    "reversalReason": null,
+    "pendingSubStatus": null,
+    "destName": "amandawallet",
+    "sourceName": "Wyre",
+    "blockchainTx": null,
+    "statusHistories": [
+        {
+            "id": "HNUBAMZ4YQQ",
+            "createdAt": 1525196884000,
+            "statusDetail": "Initiating Transfer",
+            "state": "INITIATED",
+            "failedState": null
+        },
+        {
+            "id": "V8L2MJNPF6D",
+            "createdAt": 1525196884000,
+            "statusDetail": "Transfer Completed",
+            "state": "COMPLETED",
+            "failedState": null
+        }
+    ]
+}
+</pre>
+
+<p><br></p>
 
 <p>回调载荷为JSON格式，内容标示了触发该次回调的操作。</p>
 <h1 id='d76738d4d9'>收款方式</h1><h2 id='099c6945dc'>添加银行信息</h2><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
@@ -2847,8 +3115,9 @@ transferId | string | 生成的transferId
 
 <p><strong>定义</strong></p>
 
-<p><code>GET</code> https://api.testwyre.com/v2/paymentMethod/:paymentMethodId
-<br>
+<p><code>GET</code> https://api.testwyre.com/v2/paymentMethod/:paymentMethodId</p>
+
+<p><br>
 <strong>Result Format</strong></p>
 
 <pre class="center-column">
@@ -2929,8 +3198,7 @@ transferId | string | 生成的transferId
   </span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"USD Personal example"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><br>
-<strong>美元付款字段</strong></p>
+<p><strong>美元付款字段</strong></p>
 
 <table><thead>
 <tr>
@@ -3011,8 +3279,6 @@ transferId | string | 生成的transferId
 <td>账户原币种</td>
 </tr>
 </tbody></table>
-
-<hr>
 
 <p><strong>到账时间</strong></p>
 
