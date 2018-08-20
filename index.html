@@ -971,7 +971,7 @@
 </tr>
 <tr>
 <td>X-Api-Signature</td>
-<td>用于验证的签名，由账户持有者发送。具体请查看下一步<a href="#计算签名">计算签名</a></td>
+<td>用于验证的签名，由账户持有者发送。具体请查看下一步<a href="#1028ed81a3">计算签名</a></td>
 </tr>
 </tbody></table>
 
@@ -1393,7 +1393,7 @@
       </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>平台用户申请使用VBA服务时，为这个用户<a href="#创建子钱包">创建钱包</a>。</p>
+<p>平台用户申请使用VBA服务时，为这个用户<a href="#5aea6fa68a">创建钱包</a>。</p>
 
 <p>注：</p>
 
@@ -1532,7 +1532,7 @@ filename |文件名，（可填）: &quot;coiDoc.pdf&quot;</p>
 <h3 id='5'>5.接收款项与回调</h3>
 <p>如果提前设置了<code>callbackUrl</code>，当用户的<code>accountNumber</code>接收到一笔款项，且款项成功入账后（从非合作平台打入的款项将被拒绝），您将收到入账的返回信息。</p>
 
-<p>查看<a href="#回调">回调</a>。</p>
+<p>查看<a href="#c76b97433d">回调</a>。</p>
 
 <p>如果需要验证回调，可以使用<code>Id</code>来<code>GET</code>必要的信息。epiapi系统内每笔转账都有独立的id (如 TF-123123123) 来供查询，查看：
 <em>https://api.testwyre.com/v2/transfer/[id]</em></p>
@@ -1732,7 +1732,7 @@ filename |文件名，（可填）: &quot;coiDoc.pdf&quot;</p>
 <h1 id='88f0e7b5b9'>子钱包</h1>
 <p>epiapi使用子钱包来指代每个商户的独立收款账户。在使用VBA进行跨境收款时，所有子钱包创建类型均为<code>type=VBA</code>。以下图表显示了一组典型的收款流程。</p>
 
-<p><img src="images/Flow-Zh.png" alt="Flow-Zh.png" /></p>
+<p><img src="images/Flow-2.png" alt="Flow-2.png" /></p>
 <h2 id='5aea6fa68a'>创建子钱包</h2><pre class="highlight plaintext"><code>curl -v -XPOST 'https://api.testwyre.com/v2/wallets' \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: {api-key}" \
@@ -2698,7 +2698,7 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 
 <p><br></p>
 
-<p>转账创建后状态为UNCONFIRMED（未确认)有30秒的时间用来检查并<a href="#确认转账">确认请求</a>，过时无效。无效时请重新创建转账请求，然后确认，也可以设置<code>autoConfirm</code>的值为<code>true</code>来自动确认。</p>
+<p>转账创建后状态为UNCONFIRMED（未确认)有30秒的时间用来检查并<a href="#256bf99b14">确认请求</a>，过时无效。无效时请重新创建转账请求，然后确认，也可以设置<code>autoConfirm</code>的值为<code>true</code>来自动确认。</p>
 
 <p>检查一笔转账请求时请注意以下几项：</p>
 
@@ -2759,7 +2759,7 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 }
 </pre>
 <h2 id='256bf99b14'>确认转账</h2>
-<p>此终端节点用于确认款项划转。成功创建一笔转账后会受到200回调，此时有30秒时间来确认。请留意创建转账后生成的<code>transferId</code>，如果需要在<a href="#创建转账">创建转账</a>后自动确认，创建时请设置参数<code>autoConfirm</code>的值为‘true’。</p>
+<p>此终端节点用于确认款项划转。成功创建一笔转账后会受到200回调，此时有30秒时间来确认。请留意创建转账后生成的<code>transferId</code>，如果需要在<a href="#f84e5af910">创建转账</a>后自动确认，创建时请设置参数<code>autoConfirm</code>的值为‘true’。</p>
 
 <p><strong>定义</strong></p>
 
