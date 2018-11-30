@@ -195,6 +195,10 @@
 .highlight .o {
   color: #f92672;
 }
+.update-date {
+  font-weight: bold;
+  font-style: italic;
+}
     </style>
     <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" media="print" />
@@ -386,6 +390,9 @@
                     <a href="#f285eee79f" class="toc-h2 toc-link" data-title="">美元付款</a>
                   </li>
               </ul>
+          </li>
+          <li>
+            <a href="#f285eee79d" class="toc-h1 toc-link" data-title="">更新日志</a>
           </li>
       </div>
         <ul class="toc-footer">
@@ -3286,6 +3293,25 @@ curl -v -XDELETE 'https://api.testwyre.com/v2/wallet/{wallet-id}' \
 
 <p>若在当日下午四点前提交转账提现请求，当日处理到账，当天下午四点后提交则下一个工作日到账。</p>
 
+<h1 id='f285eee79d'>更新日志</h1>
+  <p class="update-date">更新日期 2018/11/30</p>
+  <p>1. 测试环境 <br>
+    - 测试环境域名更新，新测试环境域名为 test.epiapi.com，停止使用原环境下所有功能
+  </p>
+  <p>2. 澳大利亚虚拟银行收款（VBA） <br>
+    - 添加澳大利亚 VBA 相关功能<br>
+  </p>
+  <p>3. 子钱包更新 <br>
+    - 添加“countries” 字段，允许在一个子钱包下添加多个国家 VBA（不填写此字段将默认为美国VBA） <br>
+    — 更新子钱包字段内容有效性验证
+  </p>
+  <p>4. 子钱包回传 <br>
+    — 添加 vbaData 状态变更的回传，用于更方便地监视账户创建进展
+  </p>
+  <p>
+    5. 内部服务 <br>
+    - 针对自动开户和检查状态更新内部服务流程
+  </p>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
